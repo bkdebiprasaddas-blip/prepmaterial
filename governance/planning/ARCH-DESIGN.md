@@ -77,6 +77,43 @@ calling a UI change done.
 - This is still pure addition — zero pre-existing lines removed or altered,
   other than the 2-line AWD key rename below.
 
+## Unified color palette across subject pages (added 2026-09-17 — reverses an earlier decision)
+
+**This reverses the original brief §21 / DISCOVERY.md decision** ("subject
+pages may retain their own themes"). User explicitly asked for the subjects
+to "look consistent" and confirmed (when asked) they want a real shared
+visual palette, not just bug-parity. Classified as a MAJOR change per
+RULEBOOK §J12B — recorded here, approved via direct confirmation.
+
+**Approach (low-risk by construction):** all 3 subject files already
+themed themselves entirely through CSS custom properties declared once in
+a `:root{}` / `[data-theme="dark"]{}` block, referenced throughout via
+`var(--x)`. This means the shared look was achieved by changing only the
+*values* of each file's own existing color variables (bg/card/text/muted/
+border/accent-family) to match the dashboard's palette (`#F8FAFC` bg /
+`#FFFFFF` surface / `#0F172A` text / `#64748B` muted / `#E2E8F0` border /
+`#4F46E5` accent light, `#0B1120`/`#111827`/`#F8FAFC`/`#94A3B8`/`#334155`/
+`#818CF8` dark) — **zero HTML structure, JS, or layout was touched.**
+Secondary/semantic colors (amber for warnings, the AWD/PHP pink/violet
+decorative accents, highlight colors) were deliberately left alone —
+"consistent" was read as "shares the same primary brand palette," not
+"visually identical," since stripping all secondary color would have meant
+much larger, riskier edits for no clear benefit.
+
+- **NT needed zero changes** — it already used the exact same token values
+  (confirmed by direct comparison; not a coincidence worth investigating
+  further, just convenient).
+- **AWD and PHP** had their own similar-but-not-identical indigo-based
+  palettes already (both already used `#6366f1`-family indigo as their
+  primary accent) — remapped to the exact dashboard values, including each
+  file's decorative header gradient (recolored to use the new accent
+  instead of the old one, since it's highly visible).
+- Verified: diffs against the original files show only variable-value
+  changes (+ the previously-approved nav snippet / key rename / More-menu
+  fix) — no other lines touched. All features re-tested after the change
+  (search, bookmarks, theme toggle, More menu) — all still work, no
+  console errors, confirmed via live browser testing in both themes.
+
 ## Security baseline
 Static site, no backend, no accounts, no user-submitted data leaves the
 browser, no external network calls (confirmed: zero CDN/external refs in any

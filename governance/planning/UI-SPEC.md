@@ -1,8 +1,12 @@
-# UI-SPEC.md — Dashboard visual design (subject pages keep their own themes)
+# UI-SPEC.md — Dashboard visual design
 
-> Per brief §21: the hub has its own consistent look; the 3 subject pages
-> are NOT restyled to match — they keep their existing, already-polished
-> individual themes. This spec covers `index.html` only.
+> Per brief §21, originally: the hub has its own consistent look; the 3
+> subject pages were NOT restyled to match. **Superseded 2026-09-17** — user
+> asked for the subjects to look consistent too; a shared color palette was
+> applied to all 3 (see `ARCH-DESIGN.md` → "Unified color palette across
+> subject pages" for what changed and why). Layout/structure/typography
+> per subject still differs — only the color language is now shared. This
+> spec otherwise still covers `index.html` only.
 
 ## Direction
 Modern academic dashboard, card-based, "app launcher" feel (brief §32):

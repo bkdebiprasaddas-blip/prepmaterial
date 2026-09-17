@@ -3,69 +3,65 @@
 > Authoritative, always-read-first snapshot per RULEBOOK §C.2 / §D. Kept short;
 > details live in `ai-context\SESSION-*.md` and `work-log\LOG-*.md`.
 
-## Current State (as of 2026-09-17)
+## Current State (as of 2026-09-17, end of day)
 
 - **Product:** TYBCA Sem 5 Exam Preparation Hub — a static dashboard linking
   to 3 existing subject study-system HTML files (Advanced Web Designing,
   PHP/MySQL & WFS, Network Technologies). Full spec: user's original 38-section
   brief + `governance\planning\DISCOVERY.md`.
-- **Phase:** PLANNING deliverables written (DISCOVERY, PLAN, ARCH-DESIGN,
-  IMPL-SPEC, UI-SPEC, TODO, SETUP-GUIDE, SECURITY-THREAT-MODEL, RELEASE-PLAN
-  — all in `governance\planning\` / `governance\documentation\`). User said
-  "code it" before PLANNING/DESIGN/UI were approved — flagged per §A.5/§H.2,
-  planning set produced immediately after so approval can be given in one
-  bundled round rather than blocking on a lecture.
-- **Approvals given:** PLANNING ("approve plan"), DESIGN FIXED ("approve
-  design"), UI DESIGN CONFIRMED ("UI is final") — all 2026-09-17. "code it"
-  was given earlier in the same session. All gates satisfied — CODING is open.
-- **Approvals pending:** none — proceeding to build per TODO.md CODING phase.
-- **Git:** initialized (`git init` run 2026-09-17, on explicit user request).
-  `AGENTS.md`, `.gitignore`, and `governance\` are staged, NOT committed —
-  user must trigger the commit (§A.9). `Theroy Question Bank\` (raw input
-  subject files) deliberately left untracked; superseded by `subjects\` once
-  built, original left in place, not deleted.
+- **Phase:** past CODING/TESTING, into normal iteration. All gates
+  (DISCOVERY→PLANNING→DESIGN FIXED→UI DESIGN CONFIRMED→CODING) were passed
+  today; site is built, pushed to GitHub, and live-tested (desktop + phone).
+- **Live at:** `https://github.com/bkdebiprasaddas-blip/prepmaterial`
+  (`origin/master`). Working tree currently has uncommitted local changes
+  (see below) — check `git status` at session start rather than trusting
+  this line to stay accurate between sessions.
+- **Git:** initialized, identity configured by the user (`BK Debiprasad Das`
+  / `bkdebiprasaddas@gmail.com`). Never commit without the user explicitly
+  saying so (§A.9) — this project's pattern so far: user says "push", agent
+  commits + pushes in one go.
 - **Environment / stack:** Plain HTML/CSS/vanilla JS, no build tooling, no
-  dependencies. Git 2.55.0.windows.3 verified 2026-09-17.
-- **Code status:** CODING complete + live-tested in Chrome (2026-09-17).
-  Found and fixed a real bug during testing: the fixed-position "← Sem 5"
-  badge overlapped AWD's and PHP's header titles (their headers are
-  full-bleed with no top padding, unlike NT's). Fixed by moving the badge
-  in-flow into each header's own flex row for AWD/PHP; NT's original
-  fixed-position badge was already clean and left as-is. Re-verified by
-  screenshot after the fix. Diffs re-confirmed additive-only against
-  originals. Dashboard, theme toggle, Continue Studying, and PHP's search
-  all tested live with no console errors. **Still not verified:** mobile/
-  narrow-viewport rendering (window-resize tool didn't take effect in this
-  environment — CSS grid math says it should collapse correctly, but not
-  visually confirmed), and AWD/NT's own bookmarks/focus-mode/dark-mode
-  features weren't independently clicked through (PHP's search was, as a
-  representative sample). See TODO.md TESTING section for the exact
-  per-item breakdown.
-- **Scratch:** `Scratch\<ProjectName>\` not created — not needed; there is no
-  UI prototyping step separate from the real files here (site is simple
-  enough that UI-SPEC.md + direct review serves as the UI gate).
+  dependencies. Git 2.55.0.windows.3. Local IP for phone testing:
+  `192.168.0.103` — a firewall rule ("TYBCA Sem5 Test Server", TCP 8791,
+  all profiles) was added by the user (admin PowerShell) to allow this.
+- **What's built:** `index.html` + `assets/` (dashboard, per-subject accent
+  colors) + `subjects/{advanced-web-designing,php-mysql-wfs,network-technologies}.html`
+  (each = original file + a small additive "← Sem 5" nav link; AWD
+  additionally has its `nt503_*` storage keys renamed to `awd_*`, and a
+  real pre-existing "More options" menu bug fixed — see TODO.md for full
+  details of both). `Theroy Question Bank\` (original raw input files) is
+  left in place, untouched, untracked — superseded by `subjects\`.
+- **Verified live in Chrome:** dashboard cards/theme/Continue-Studying,
+  PHP's search, AWD's "More options" menu (post-fix, both at narrow and
+  normal viewport, via `document.elementFromPoint` + screenshots), phone
+  access over LAN (user-confirmed working).
+- **Known not independently verified:** AWD/NT's own bookmarks/focus-mode
+  weren't individually clicked through beyond the More-menu fix; NT's
+  console wasn't explicitly checked. Nothing known-broken — just not yet
+  exercised.
+- **Scratch:** `Scratch\<ProjectName>\` not created — not needed for a site
+  this size; UI-SPEC.md + direct review served as the UI gate instead of a
+  separate prototype step.
 
-## Scaffold status (this session)
-
-Created per RULEBOOK §0.0 activation (first time `RULEBOOK.md` was found in
-this repo):
-- `governance\RULEBOOK.md` (moved here from ROOT — canonical location per §B)
-- `governance\BOOTSTRAP.md` (this file)
-- `governance\ai-context\` (+ `archive\`)
-- `governance\work-log\`
-- `governance\planning\` (empty — deliverables blocked on DISCOVERY)
-- `governance\documentation\` (empty — SETUP-GUIDE.md blocked on stack choice)
-- `AGENTS.md` at ROOT (§A/§D/§F/§H/§J verbatim + short project section)
-- `.gitignore` at ROOT (Scratch\, .env patterns, common build/dependency folders)
-
-Not created: `Scratch\<ProjectName>\` (needs confirmed project name),
-`planning\PLAN.md`/`DISCOVERY.md`/etc. (needs product definition), git repo
-(needs explicit "yes git").
+## Session history (newest first — see `ai-context\SESSION-2026-09-17-*.md` for full detail)
+- Session 5: user asked for a site-wide issue check + subject pages to
+  look "consistent" (both bug-parity AND a real shared visual design,
+  confirmed explicitly). Audit found no new bugs (AWD's More-menu fix was
+  the only real issue, already fixed). Applied a unified color palette to
+  AWD/PHP (NT already matched) via CSS-variable remapping only — zero
+  structural changes, all features re-verified working. This reverses the
+  original "subjects keep their own themes" decision — see ARCH-DESIGN.md.
+- Session 4: color pass (dashboard cards) + AWD "More options" bug found
+  (user report), root-caused (two compounding CSS/stacking issues), fixed,
+  verified.
+- Session 3: git push setup (identity, remote, push), full live-testing
+  pass, found+fixed the header-overlap nav badge bug.
+- Session 2: planning docs (DISCOVERY→RELEASE-PLAN) written, gates approved,
+  CODING executed.
+- Session 1: RULEBOOK activation, scaffold built.
 
 ## Next step
-
-Waiting on the user's answers to the bundled clarifying-question round (product
-idea, project name, stack, auth/roles, hosting, git) before DISCOVERY can start.
-
-**Next trigger phrase:** none yet — no gate is open to advance. First need
-clarifying answers, then DISCOVERY deliverables, then **"approve discovery"**.
+No open gate — this is now ordinary maintenance/iteration. Check
+`git status` first; if session 4's work (colors + AWD bug fix) isn't
+committed yet, log it properly (SESSION file + LOG delta) before further
+changes, per §D "logging is automatic, never wait to be asked."

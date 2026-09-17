@@ -6,21 +6,21 @@
 <title>Advanced Web Designing - Modern Question Bank</title>
 <style>
 :root{
-  --bg:#fdfcff;
+  --bg:#F8FAFC;
   --bg-gradient:
-    radial-gradient(1000px 600px at 0% -10%, rgba(99,102,241,.12) 0%, transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(236,72,153,.10) 0%, transparent 60%),
-    linear-gradient(to bottom, #fdfcff, #f5f3ff);
+    radial-gradient(1000px 600px at 0% -10%, rgba(79,70,229,.10) 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(124,58,237,.08) 0%, transparent 60%),
+    linear-gradient(to bottom, #F8FAFC, #F1F5F9);
   --card:#ffffff;
   --card-hover:#ffffff;
-  --text:#0f172a;
-  --muted:#6b7280;
-  --border:#e9e5ff;
-  --border-strong:#ddd6fe;
-  --accent:#6366f1;
-  --accent-2:#8b5cf6;
+  --text:#0F172A;
+  --muted:#64748B;
+  --border:#E2E8F0;
+  --border-strong:#CBD5E1;
+  --accent:#4F46E5;
+  --accent-2:#7C3AED;
   --accent-3:#ec4899;
-  --accent-light:#e0e7ff;
+  --accent-light:#EEF2FF;
   --accent-light-2:#f3e8ff;
   --amber-bg:#fff7ed;
   --amber-text:#9a3412;
@@ -35,21 +35,21 @@
   --shadow-card:0 0 0 1px rgba(15,23,42,.04),0 1px 4px rgba(15,23,42,.04);
 }
 [data-theme="dark"]{
-  --bg:#0a0a1a;
+  --bg:#0B1120;
   --bg-gradient:
-    radial-gradient(1000px 600px at 0% -10%, rgba(99,102,241,.18) 0%, transparent 60%),
-    radial-gradient(900px 500px at 100% 0%, rgba(236,72,153,.12) 0%, transparent 60%),
-    linear-gradient(to bottom, #0a0a1a, #11112a);
-  --card:#15152e;
-  --card-hover:#1c1c3a;
-  --text:#e9e5ff;
-  --muted:#9ca3af;
-  --border:#2a2a4a;
-  --border-strong:#3a3a5a;
-  --accent:#818cf8;
-  --accent-2:#a78bfa;
+    radial-gradient(1000px 600px at 0% -10%, rgba(129,140,248,.16) 0%, transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(196,181,253,.10) 0%, transparent 60%),
+    linear-gradient(to bottom, #0B1120, #111827);
+  --card:#111827;
+  --card-hover:#172033;
+  --text:#F8FAFC;
+  --muted:#94A3B8;
+  --border:#334155;
+  --border-strong:#475569;
+  --accent:#818CF8;
+  --accent-2:#A78BFA;
   --accent-3:#f472b6;
-  --accent-light:rgba(99,102,241,.14);
+  --accent-light:rgba(129,140,248,.14);
   --accent-light-2:rgba(139,92,246,.14);
   --amber-bg:rgba(251,146,60,.12);
   --amber-text:#fed7aa;
@@ -426,9 +426,7 @@ button,input,select{font:inherit}
 .ref-card li strong{color:var(--text)}
 .more-menu{position:relative}
 .dropdown{
-  position:absolute;
-  right:0;
-  top:calc(100% + 8px);
+  position:fixed;
   min-width:200px;
   background:var(--card);
   border:1px solid var(--border);
@@ -436,7 +434,7 @@ button,input,select{font:inherit}
   box-shadow:var(--shadow-hover);
   padding:6px;
   display:none;
-  z-index:50;
+  z-index:250;
 }
 .dropdown.open{display:block}
 .dropdown button{
@@ -3823,6 +3821,11 @@ db.dropDatabase()         // delete the whole database</code></span></div><div c
   const savedBtn = document.getElementById('savedBtn');
   const moreBtn = document.getElementById('moreBtn');
   const moreDropdown = document.getElementById('moreDropdown');
+  // Move out of .control-bar (position:sticky;z-index:90) so this
+  // fixed-position dropdown's own z-index compares against page-level
+  // siblings like .site-header (position:sticky;z-index:100) instead of
+  // being capped inside .control-bar's local stacking context.
+  document.body.appendChild(moreDropdown);
   const themeToggle = document.getElementById('themeToggle');
   const clearFiltersBtn = document.getElementById('clearFilters');
   const printBtn = document.getElementById('printBtn');
@@ -4068,10 +4071,28 @@ db.dropDatabase()         // delete the whole database</code></span></div><div c
     if(savedOnly) filterQuestions();
   });
 
-  // More dropdown
+  // More dropdown — position:fixed, computed from the button's live position
+  // (was position:absolute inside .control-bar, which has overflow-x:auto;
+  // per the CSS overflow spec that clips both axes, hiding the dropdown
+  // below the control bar. Pre-existing bug, found + fixed during
+  // TYBCA Sem 5 integration testing — not caused by the integration itself.)
+  function positionMoreDropdown(){
+    const btnRect = moreBtn.getBoundingClientRect();
+    const ddWidth = moreDropdown.offsetWidth || 200;
+    let left = btnRect.right - ddWidth;
+    if(left < 8) left = 8;
+    if(left + ddWidth > window.innerWidth - 8) left = window.innerWidth - ddWidth - 8;
+    moreDropdown.style.left = left + 'px';
+    moreDropdown.style.top = (btnRect.bottom + 8) + 'px';
+  }
   moreBtn.addEventListener('click', (e)=>{
     e.stopPropagation();
+    const willOpen = !moreDropdown.classList.contains('open');
+    if(willOpen) positionMoreDropdown();
     moreDropdown.classList.toggle('open');
+  });
+  window.addEventListener('resize', ()=>{
+    if(moreDropdown.classList.contains('open')) positionMoreDropdown();
   });
   document.addEventListener('click', ()=>{
     moreDropdown.classList.remove('open');
