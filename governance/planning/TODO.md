@@ -114,6 +114,56 @@ consistent. Actions taken:
   bookmarks, theme, More menu) — no regressions, no console errors, diffs
   confirmed additive/variable-value-only against originals.
 
+## NT header structural fix — 2026-09-17
+User flagged NT's header as still inconsistent after the color unification
+— correctly: NT's `.hero` was an inset, rounded, bordered card (sitting
+inside `.app`'s max-width:1320px/padding container), while AWD/PHP's
+headers are full-bleed bars flush to the viewport edges. Fixed by making
+NT's header full-bleed too (majority match — 2 of 3 already agreed):
+- Removed `.hero`'s border/border-radius, made it a flush top bar
+  (`margin-top` cancels `.app`'s own top padding at each breakpoint).
+- Broke it out of `.app`'s centered max-width container using the standard
+  negative-margin "full-bleed" CSS technique.
+- **Caught and fixed a bug introduced by that same technique before
+  shipping it:** the initial CSS-only `calc(50% - 50vw)` approach is off by
+  the scrollbar's width (`100vw` includes it, `50%` of the container
+  doesn't), which caused a few pixels of real horizontal page overflow —
+  verified via `document.documentElement.scrollWidth > clientWidth`.
+  Replaced with a live JS measurement (mirroring NT's own existing
+  `--sticky-offset` pattern) that reads `.hero`'s actual gap to the visible
+  viewport edges and sets pixel-exact margins — zero overflow, confirmed
+  on all 4 pages (dashboard + 3 subjects), not just NT.
+- Verified: sticky-scroll behavior still works (header stays pinned to
+  top while scrolling), dark mode still correct, search/More-menu still
+  functional, no console errors. Diff against the original NT file
+  confirmed clean (only `.hero`-related CSS/JS + the previously-approved
+  nav snippet).
+
+## NT header compactness fix — 2026-09-17
+User flagged NT's header was still tall/dense vs AWD/PHP's compact single-
+row bar (NT was ~198px, stacking an eyebrow line, big title, subtitle, and
+a 7-item stat row; AWD/PHP are ~60px single rows). Restructured to match:
+- Hid the "QUESTION BANK" eyebrow, "2015–2025" badge, and subtitle line.
+- Reduced the 7 stat pills to 2 visible (Questions, Shown) — same pattern
+  AWD already uses ("Questions | Visible"); the other 5 stay in the DOM
+  (JS still updates them, e.g. `savedStat`) just visually hidden via
+  `:nth-child(n+3){display:none}`, zero JS/functionality change.
+- Wrapped the existing `<h1>`+prepared-by paragraph in one new
+  `<div class="hero-title-block">` (the only HTML structural addition) so
+  they could sit as one flex item left of the stats, matching AWD's
+  `.header-title` / PHP's brand-text pattern.
+- On narrow screens, stats now hide entirely (kept title only) — matching
+  AWD's `.stat-pill{display:none}` / PHP's `.header-stats{display:none}`
+  precedent at their own breakpoints, rather than inventing a new pattern.
+- Result: NT's header is now 60px tall, matching AWD (60px) and PHP (64px)
+  within 4px.
+
+Verified live: sticky-scroll still pins header to top while scrolling,
+dark mode renders correctly, search and the More menu (from the earlier
+fix) both still work, no console errors, zero horizontal overflow. Diff
+against the original NT file re-confirmed scoped to header CSS/HTML/JS
+only.
+
 ## Backlog (out of scope for this pass — §J14, not silently added)
 - Global cross-subject search (brief §14 — only if reliably implementable;
   not attempted this pass)

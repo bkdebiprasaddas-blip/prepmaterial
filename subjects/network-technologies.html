@@ -67,16 +67,18 @@ mark.qhl{background:var(--color-warning-100);color:inherit;padding:0 2px;border-
 
 /* ---------- app + compact frozen header ---------- */
 .app{max-width:1320px;margin:0 auto;padding:18px 22px 40px}
-.hero{position:sticky;top:4px;z-index:60;overflow:hidden;padding:16px 22px 15px;border:1px solid var(--color-border);border-radius:var(--radius-lg);color:#fff;background:linear-gradient(120deg,var(--color-primary-700),#4F46E5 46%,#7C3AED 78%,#0891B2);box-shadow:var(--shadow-md)}
+.hero{position:sticky;top:0;z-index:60;overflow:hidden;display:flex;align-items:center;gap:16px;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);margin-top:-18px;min-height:60px;padding:0 calc(22px + max(0px,(100vw - 1320px)/2));border:none;border-bottom:1px solid rgba(255,255,255,.15);border-radius:0;color:#fff;background:linear-gradient(120deg,var(--color-primary-700),#4F46E5 46%,#7C3AED 78%,#0891B2);box-shadow:var(--shadow-md)}
 [data-theme="dark"] .hero{background:linear-gradient(120deg,#1E1B4B,#312E81 55%,#4C1D95)}
-.hero-top{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}
+.hero-title-block{min-width:0}
+.hero-top{display:none}
 .eyebrow{margin:0;color:#C7D2FE;font-size:.72rem;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
 .coverage{padding:3px 10px;border:1px solid rgba(255,255,255,.35);border-radius:var(--radius-pill);color:#E0E7FF;background:rgba(255,255,255,.12);font-size:.72rem;font-weight:700}
-.hero h1{margin:0;font-size:clamp(1.25rem,2.6vw,1.9rem);line-height:1.15;letter-spacing:-.02em;font-weight:800}
-.hero h1 span{color:#A5F3FC}
-.prepared-by{margin:5px 0 0;font-size:.78rem;color:#E0E7FF;letter-spacing:.02em}
-.hero-subtitle{margin:4px 0 0;font-size:.85rem;color:#C7D2FE}
-.hero-stats{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.hero h1{margin:0;font-size:15px;line-height:1.2;letter-spacing:-.01em;font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero h1 span{color:#A5F3FC;font-size:1em}
+.prepared-by{margin:1px 0 0;font-size:11px;color:#E0E7FF;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero-subtitle{display:none}
+.hero-stats{display:flex;gap:8px;margin-left:auto;flex-shrink:0}
+.hero-stats>.hero-stat:nth-child(n+3){display:none}
 .hero-stat{display:flex;align-items:baseline;gap:6px;padding:5px 11px;border:1px solid rgba(255,255,255,.28);border-radius:var(--radius-sm);background:rgba(255,255,255,.12);font-size:.72rem;color:#E0E7FF}
 .hero-stat strong{color:#fff;font-size:.98rem;font-weight:800}
 
@@ -333,25 +335,19 @@ li.question-item:not(.mcq)>.q-click{display:block}
   .controls{top:var(--sticky-offset)}
   .result-count{margin-left:0;flex-basis:100%}
   .app{padding:14px 12px 32px}
-  /* compact FROZEN subject header (sticky + slimmed) */
-  .hero{position:sticky;top:0;z-index:56;padding:9px 14px 8px}
-  .hero-top{margin-bottom:2px}
-  .eyebrow{font-size:.6rem;letter-spacing:.14em}
-  .coverage{display:none}
-  .hero h1{font-size:1.06rem}
-  .hero h1 span{font-size:.92em}
-  .prepared-by{margin-top:3px;font-size:.62rem}
-  .hero-subtitle{display:none}
-  .hero-stats{flex-wrap:nowrap;overflow-x:auto;margin-top:7px;gap:6px;padding-bottom:2px;scrollbar-width:none;-ms-overflow-style:none}
-  .hero-stats::-webkit-scrollbar{display:none}
-  .hero-stat{flex:0 0 auto;padding:3px 8px;font-size:.62rem}
-  .hero-stat strong{font-size:.8rem}
+  /* compact FROZEN subject header (sticky + slimmed) — stats dropped
+     entirely below this width, matching AWD (.stat-pill) / PHP
+     (.header-stats), which do the same rather than shrink further */
+  .hero{position:sticky;top:0;z-index:56;margin-top:-14px;min-height:52px;padding:0 14px}
+  .hero h1{font-size:14px}
+  .prepared-by{font-size:10px}
+  .hero-stats{display:none}
   .focus-answer{padding:20px 16px 24px;font-size:.98rem}
   .focus-qtext{font-size:1.05rem;padding:15px 16px}
 }
 @media (max-width:480px){
   .app{padding:12px 8px 28px}
-  .hero{padding:8px 12px 7px}
+  .hero{margin-top:-12px;min-height:48px;padding:0 12px}
   .question-item{padding:12px 12px}
   .focus-footer{padding:8px 10px}
   .fact span.fact-txt{display:none}
@@ -411,7 +407,7 @@ li.question-item:not(.mcq)>.q-click{display:block}
 <div class="app" id="top">
 <header class="hero">
 <div class="hero-top"><p class="eyebrow">Question Bank</p><span class="coverage">2015–2025</span></div>
-<h1>Network Technologies <span>(503)</span></h1><p class="prepared-by credit-line"><strong>PREPARED BY: BK DEBIPRASAD DAS • SDJ INTERNATIONAL COLLEGE</strong></p>
+<div class="hero-title-block"><h1>Network Technologies <span>(503)</span></h1><p class="prepared-by credit-line"><strong>PREPARED BY: BK DEBIPRASAD DAS • SDJ INTERNATIONAL COLLEGE</strong></p></div>
 <p class="hero-subtitle">Previous-year questions arranged clearly by marks and examination section.</p>
 <div aria-label="Question bank summary" class="hero-stats">
 <div class="hero-stat"><strong id="totalStat">340</strong><span>Questions</span></div>
@@ -1508,6 +1504,28 @@ backToTop.addEventListener('click', function () { window.scrollTo({ top: 0, beha
 
 /* ---------------- frozen header offset (search bar sticks right below it) ---------------- */
 var heroEl = $('.hero');
+
+/* ---------------- full-bleed header (matches AWD/PHP edge-to-edge look) ----------------
+   CSS calc(50% - 50vw) is a close approximation but is off by the scrollbar's
+   width (100vw includes it, 50% of .app doesn't), which caused a few px of
+   real horizontal page overflow — measured live instead, mirroring the
+   --sticky-offset pattern just below. */
+function updateHeroBleed() {
+  try {
+    // Measure .hero's own natural gap to the viewport edges (its containing
+    // block is .app's CONTENT box, already inset by .app's own padding —
+    // measuring .hero itself sidesteps needing to know that padding).
+    heroEl.style.marginLeft = '0px';
+    heroEl.style.marginRight = '0px';
+    var rect = heroEl.getBoundingClientRect();
+    var visibleWidth = document.documentElement.clientWidth; // excludes scrollbar, unlike innerWidth/100vw
+    heroEl.style.marginLeft = (-rect.left) + 'px';
+    heroEl.style.marginRight = (-(visibleWidth - rect.right)) + 'px';
+  } catch (e) { /* keep CSS calc() fallback */ }
+}
+window.addEventListener('resize', function () { requestAnimationFrame(updateHeroBleed); });
+updateHeroBleed();
+
 function updateStickyOffset() {
   try {
     var base = heroEl ? Math.round(heroEl.getBoundingClientRect().height) : 124;

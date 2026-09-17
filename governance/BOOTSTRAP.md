@@ -44,13 +44,25 @@
   separate prototype step.
 
 ## Session history (newest first — see `ai-context\SESSION-2026-09-17-*.md` for full detail)
-- Session 5: user asked for a site-wide issue check + subject pages to
-  look "consistent" (both bug-parity AND a real shared visual design,
-  confirmed explicitly). Audit found no new bugs (AWD's More-menu fix was
-  the only real issue, already fixed). Applied a unified color palette to
-  AWD/PHP (NT already matched) via CSS-variable remapping only — zero
-  structural changes, all features re-verified working. This reverses the
-  original "subjects keep their own themes" decision — see ARCH-DESIGN.md.
+- Session 5 (continued after user follow-ups "NETWORK TECHNOLOGY HEADER IS
+  INCONSISTENT" and "i want header compact like rest 2"): color-only
+  consistency wasn't enough — NT's header was still structurally different
+  (inset rounded card, ~198px tall, vs AWD/PHP's full-bleed ~60px bar).
+  Fixed in two rounds: (1) made NT's header full-bleed edge-to-edge
+  (caught + fixed a real horizontal-overflow bug introduced by the CSS-only
+  approach along the way, replaced with a JS live-measurement fix); (2)
+  restructured it to be compact/single-row like AWD/PHP — hid the eyebrow/
+  subtitle/5 of 7 stats, added one wrapper `<div>` around the title block.
+  NT's header is now 60px tall, matching AWD (60px)/PHP (64px). All
+  verified live: sticky-scroll, dark mode, search, More menu, zero
+  overflow, no console errors.
+- Session 5 (part 1): user asked for a site-wide issue check + subject
+  pages to look "consistent" (both bug-parity AND a real shared visual
+  design, confirmed explicitly). Audit found no new bugs (AWD's More-menu
+  fix was the only real issue, already fixed). Applied a unified color
+  palette to AWD/PHP (NT already matched) via CSS-variable remapping only.
+  This reverses the original "subjects keep their own themes" decision —
+  see ARCH-DESIGN.md.
 - Session 4: color pass (dashboard cards) + AWD "More options" bug found
   (user report), root-caused (two compounding CSS/stacking issues), fixed,
   verified.
