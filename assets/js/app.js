@@ -93,6 +93,8 @@
       card.className = "subject-card";
       card.href = subject.file;
       card.setAttribute("aria-label", "Open " + subject.name);
+      if (subject.color) card.style.setProperty("--card-accent", subject.color);
+      if (subject.colorSoft) card.style.setProperty("--card-accent-soft", subject.colorSoft);
       card.addEventListener("click", function () {
         safeSet(LAST_SUBJECT_KEY, subject.id);
         log("[NAV]", "Opening subject: " + subject.name);

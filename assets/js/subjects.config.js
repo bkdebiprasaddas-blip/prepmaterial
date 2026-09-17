@@ -7,7 +7,9 @@ window.TYBCA_SEM5_SUBJECTS = [
     shortName: "AWD",
     icon: "🌐",
     description: "Previous-year questions, important questions and revision material.",
-    file: "subjects/advanced-web-designing.html"
+    file: "subjects/advanced-web-designing.html",
+    color: "#2563EB",
+    colorSoft: "#EFF6FF"
   },
   {
     id: "php-wfs",
@@ -15,7 +17,9 @@ window.TYBCA_SEM5_SUBJECTS = [
     shortName: "PHP/WFS",
     icon: "🐘",
     description: "Question bank by marks, previous-year papers, exam-focused preparation.",
-    file: "subjects/php-mysql-wfs.html"
+    file: "subjects/php-mysql-wfs.html",
+    color: "#7C3AED",
+    colorSoft: "#F5F3FF"
   },
   {
     id: "nt",
@@ -23,6 +27,8 @@ window.TYBCA_SEM5_SUBJECTS = [
     shortName: "NT",
     icon: "📡",
     description: "340 previous-year questions across 7 sections, exam-ready answers.",
-    file: "subjects/network-technologies.html"
+    file: "subjects/network-technologies.html",
+    color: "#059669",
+    colorSoft: "#ECFDF5"
   }
 ];

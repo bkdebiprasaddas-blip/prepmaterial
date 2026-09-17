@@ -72,6 +72,10 @@ a { color: inherit; text-decoration: none; }
   margin: 0;
   font-size: clamp(1.5rem, 4vw, 1.9rem);
   letter-spacing: -0.02em;
+  background: linear-gradient(90deg, #4F46E5, #7C3AED 45%, #059669);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
 .site-header .subtitle {
@@ -141,11 +145,15 @@ a { color: inherit; text-decoration: none; }
 }
 
 .subject-card {
+  --card-accent: var(--accent);
+  --card-accent-soft: var(--accent-soft);
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 10px;
   background: var(--surface);
   border: 1px solid var(--border);
+  border-top: 3px solid var(--card-accent);
   border-radius: var(--radius);
   padding: 22px 20px;
   box-shadow: var(--shadow-rest);
@@ -156,17 +164,34 @@ a { color: inherit; text-decoration: none; }
 .subject-card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-hover);
-  border-color: var(--accent);
+  border-color: var(--card-accent);
 }
 
 .subject-card:focus-visible {
-  outline: 3px solid var(--accent);
+  outline: 3px solid var(--card-accent);
   outline-offset: 2px;
 }
 
 .subject-card .icon {
-  font-size: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--card-accent-soft);
+  font-size: 1.5rem;
   line-height: 1;
+}
+
+[data-theme="dark"] .subject-card .icon {
+  background: color-mix(in srgb, var(--card-accent) 22%, transparent);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) .subject-card .icon {
+    background: color-mix(in srgb, var(--card-accent) 22%, transparent);
+  }
 }
 
 .subject-card h2 {
@@ -190,7 +215,7 @@ a { color: inherit; text-decoration: none; }
   padding-top: 8px;
   font-size: 0.85rem;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--card-accent);
 }
 
 .site-footer {

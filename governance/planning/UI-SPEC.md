@@ -14,8 +14,16 @@ clean, restrained, no hero imagery, no marketing copy, fast to scan.
 - Border: `#E2E8F0` (light) / `#334155` (dark)
 - Text primary: `#0F172A` (light) / `#F8FAFC` (dark)
 - Text muted: `#64748B` (light) / `#94A3B8` (dark)
-- Accent (links/focus/active): `#4F46E5` (indigo) — one accent, used
-  sparingly (hover border, focus ring, "Open Subject" affordance)
+- Accent (default, dashboard chrome — theme toggle focus, etc.): `#4F46E5` (indigo)
+- **Per-subject accent (added 2026-09-17, user asked for "a bit colourful"):**
+  each subject card carries its own accent via `color`/`colorSoft` fields in
+  `subjects.config.js` — AWD `#2563EB` blue, PHP/WFS `#7C3AED` violet, NT
+  `#059669` emerald. Used for: card top border, icon badge background,
+  hover/focus border, "Open Subject" link color. Kept to card-level accents
+  only (not full card backgrounds/gradients) to stay within the brief's own
+  "not a marketing website" restraint.
+- Header title (`<h1>`): subtle indigo→violet→emerald gradient text — the
+  one deliberately decorative touch, header-only, not repeated elsewhere.
 - Shadow: `0 2px 8px rgba(15,23,42,.06)` resting, `0 8px 20px rgba(15,23,42,.10)` hover
 
 ## Typography
