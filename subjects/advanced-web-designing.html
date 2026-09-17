@@ -935,12 +935,10 @@ button,input,select{font:inherit}
 </style>
 </head>
 <body>
-<a href="../index.html" class="tybca-sem5-home" id="tybcaSem5Home" title="Back to Semester 5 Hub" aria-label="Back to Semester 5 Hub">← Sem 5</a>
 <style>
-.tybca-sem5-home{position:fixed;top:12px;left:12px;z-index:999999;display:inline-flex;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;background:#4F46E5;color:#fff;font:600 .78rem/1 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none;box-shadow:0 4px 14px rgba(15,23,42,.25);opacity:.88;transition:opacity .15s ease,transform .15s ease}
-.tybca-sem5-home:hover,.tybca-sem5-home:focus-visible{opacity:1;transform:translateY(-1px)}
-.tybca-sem5-home:focus-visible{outline:3px solid #fff;outline-offset:2px}
-@media (max-width:480px){.tybca-sem5-home{top:8px;left:8px;padding:5px 10px;font-size:.72rem}}
+.tybca-sem5-home{display:inline-flex;flex-shrink:0;align-items:center;gap:4px;padding:6px 12px;border-radius:999px;background:rgba(255,255,255,.16);color:#fff;font:600 .78rem/1 ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;text-decoration:none;border:1px solid rgba(255,255,255,.3);transition:background .15s ease}
+.tybca-sem5-home:hover,.tybca-sem5-home:focus-visible{background:rgba(255,255,255,.28)}
+.tybca-sem5-home:focus-visible{outline:2px solid #fff;outline-offset:2px}
 </style>
 <script id="safe-storage">
 (function(){
@@ -960,6 +958,7 @@ button,input,select{font:inherit}
 <div id="progressBar" style="position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg, #6366f1, #8b5cf6, #ec4899, #f59e0b, #3b82f6);z-index:200;width:0%;transition:width .1s;pointer-events:none"></div>
 <header class="site-header">
   <div class="header-left">
+    <a href="../index.html" class="tybca-sem5-home" id="tybcaSem5Home" title="Back to Semester 5 Hub" aria-label="Back to Semester 5 Hub">← Sem 5</a>
     <div class="header-logo">AWD</div>
     <div class="header-title">
       <h1>Advanced Web Designing</h1>

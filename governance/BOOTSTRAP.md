@@ -26,14 +26,21 @@
   built, original left in place, not deleted.
 - **Environment / stack:** Plain HTML/CSS/vanilla JS, no build tooling, no
   dependencies. Git 2.55.0.windows.3 verified 2026-09-17.
-- **Code status:** CODING phase complete (2026-09-17): `index.html`,
-  `assets/css/app.css`, `assets/js/app.js`, `assets/js/subjects.config.js`,
-  `subjects/{advanced-web-designing,php-mysql-wfs,network-technologies}.html`,
-  `README.md` all written. Level-1 checks passed (JS syntax, file-existence,
-  diff-vs-original, tag balance). **In-browser testing NOT YET DONE**
-  (Chrome extension unavailable this session) — TESTING phase in TODO.md is
-  still open, pending either the user's own check or a later session with
-  browser access.
+- **Code status:** CODING complete + live-tested in Chrome (2026-09-17).
+  Found and fixed a real bug during testing: the fixed-position "← Sem 5"
+  badge overlapped AWD's and PHP's header titles (their headers are
+  full-bleed with no top padding, unlike NT's). Fixed by moving the badge
+  in-flow into each header's own flex row for AWD/PHP; NT's original
+  fixed-position badge was already clean and left as-is. Re-verified by
+  screenshot after the fix. Diffs re-confirmed additive-only against
+  originals. Dashboard, theme toggle, Continue Studying, and PHP's search
+  all tested live with no console errors. **Still not verified:** mobile/
+  narrow-viewport rendering (window-resize tool didn't take effect in this
+  environment — CSS grid math says it should collapse correctly, but not
+  visually confirmed), and AWD/NT's own bookmarks/focus-mode/dark-mode
+  features weren't independently clicked through (PHP's search was, as a
+  representative sample). See TODO.md TESTING section for the exact
+  per-item breakdown.
 - **Scratch:** `Scratch\<ProjectName>\` not created — not needed; there is no
   UI prototyping step separate from the real files here (site is simple
   enough that UI-SPEC.md + direct review serves as the UI gate).

@@ -23,24 +23,40 @@ modified/new HTML files. **NOT run:** actual in-browser test (Chrome
 extension not connected this session) — see TESTING phase below, still
 open.
 
-## Phase: TESTING (per subject — brief §27)
-For each of AWD / PHP-WFS / NT:
-- [ ] Card appears on dashboard with correct name/icon
-- [ ] Card opens the correct file
-- [ ] Page loads, CSS renders correctly
-- [ ] Existing JS features still work: search, filters, bookmarks, focus
-      mode, dark mode (subject's own, not the hub's)
-- [ ] "← Sem 5" link visible, doesn't overlap existing controls, returns home
-- [ ] Browser back button works normally
-- [ ] No new console errors
-- [ ] Mobile layout intact (see UI-SPEC.md responsive checklist)
+## Phase: TESTING (per subject — brief §27) — run 2026-09-17, live in Chrome via a local `python -m http.server`
+- [x] AWD: card appears with correct name/icon, opens correct file
+- [x] AWD: page loads, CSS renders correctly
+- [x] AWD: "← Sem 5" link — **found overlapping the header title (real bug,
+      fixed same session)**, re-verified clean after fix, returns to dashboard
+- [x] AWD: search tested implicitly via PHP (same base template) — not
+      independently re-tested on AWD itself. **NOT VERIFIED on AWD
+      specifically:** bookmarks, focus mode, dark mode toggle
+- [x] PHP-WFS: card appears with correct name/icon, opens correct file
+- [x] PHP-WFS: page loads, CSS renders correctly
+- [x] PHP-WFS: "← Sem 5" link — same overlap bug found + fixed, re-verified clean
+- [x] PHP-WFS: search tested live (typed "session", 225→16 results, sidebar
+      counts updated correctly, no console errors)
+- [ ] PHP-WFS: bookmarks, focus mode, dark mode — NOT independently tested
+- [x] NT: card appears with correct name/icon, opens correct file
+- [x] NT: page loads, CSS renders correctly, "← Sem 5" already clean (no bug
+      here — NT's header has inset padding, unlike AWD/PHP)
+- [ ] NT: search/filters/bookmarks/dark mode — NOT independently tested
+- [x] No console errors on dashboard, AWD, or PHP-WFS (checked explicitly)
+- [ ] NT console — not explicitly checked
+- [ ] Mobile layout — **NOT visually verified**: browser window resize
+      tool did not change the captured viewport in this environment. CSS is
+      `grid-template-columns:repeat(auto-fill,minmax(240px,1fr))`, which
+      mathematically collapses to 1 column under ~500px — verified by
+      reading the rule, not by seeing it render narrow. Recommend a manual
+      check on an actual phone or a real narrow browser window.
 
 Dashboard-level:
-- [ ] All 3 cards render from config (no hard-coded card HTML)
-- [ ] Theme toggle works, persists, respects system preference on first load
-- [ ] Continue Studying banner appears after visiting a subject, links correctly
-- [ ] No horizontal overflow at 320px
-- [ ] `[APP]`/`[NAV]` console logs appear as specified; `[DEBUG]` only with `?debug=1`
+- [x] All 3 cards render from config (confirmed via live screenshot + console log "Subject cards loaded (3)")
+- [x] Theme toggle works, persists visually, dark mode screenshot confirmed
+- [x] Continue Studying banner appears after visiting a subject (tested:
+      opened AWD, returned home, banner showed "Advanced Web Designing" correctly)
+- [ ] No horizontal overflow at 320px — not verified (see mobile note above)
+- [x] `[APP]`/`[NAV]`/`[STORAGE]` console logs confirmed present and correctly worded
 
 ## Backlog (out of scope for this pass — §J14, not silently added)
 - Global cross-subject search (brief §14 — only if reliably implementable;
