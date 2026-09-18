@@ -30,5 +30,15 @@ window.TYBCA_SEM5_SUBJECTS = [
     file: "subjects/network-technologies.html",
     color: "#059669",
     colorSoft: "#ECFDF5"
+  },
+  {
+    id: "unix",
+    name: "UNIX & Shell Programming",
+    shortName: "UNIX",
+    icon: "🐚",
+    description: "322 questions across 8 sections — MCQs plus 1 to 7 mark answers.",
+    file: "subjects/unix-shell-programming.html",
+    color: "#D97706",
+    colorSoft: "#FFFBEB"
   }
 ];
