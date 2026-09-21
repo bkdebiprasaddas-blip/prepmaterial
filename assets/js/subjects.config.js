@@ -40,5 +40,15 @@ window.TYBCA_SEM5_SUBJECTS = [
     file: "subjects/unix-shell-programming.html",
     color: "#D97706",
     colorSoft: "#FFFBEB"
+  },
+  {
+    id: "aspnet",
+    name: "ASP.NET / .NET Technology",
+    shortName: "ASP.NET",
+    icon: "🔷",
+    description: "591 questions across 3 parts — MCQs, 1-mark & 4-mark exam answers.",
+    file: "subjects/asp-net-dotnet.html",
+    color: "#DB2777",
+    colorSoft: "#FDF2F8"
   }
 ];
