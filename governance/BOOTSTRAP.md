@@ -14,8 +14,12 @@
   2026-09-17; site is built, pushed to GitHub, and live-tested (desktop +
   phone). Now ordinary content/structure maintenance.
 - **Live at:** `https://github.com/bkdebiprasaddas-blip/prepmaterial`
-  (`origin/master`). Working tree has uncommitted local changes — check
-  `git status` at session start rather than trusting this line between sessions.
+  (`origin/master`). Working tree is clean as of 2026-09-27 session 2
+  (commit `f9ba52d` pushed) apart from three pre-existing untracked source
+  files that are deliberately not tracked: the question-bank Markdown, a
+  ChatGPT notes Markdown, and `subjects/asp-net-vb-notes.html`. Check
+  `git status` at session start rather than trusting this line between
+  sessions.
 - **Git:** initialized, identity configured by the user (`BK Debiprasad Das`
   / `bkdebiprasaddas@gmail.com`). Never commit without the user explicitly
   saying so (§A.9) — this project's pattern so far: user says "push", agent
@@ -85,8 +89,10 @@
 - Session 1: RULEBOOK activation, scaffold built.
 
 ## Next step
-No open gate. The AWD rebuild is saved but **not committed** — awaiting the
-user's word. Optional follow-ups recorded in `SESSION-2026-09-27-2.md`:
-de-duplicate `form-5`/`form-13`, add `typescript` to the page's highlighter
-tables, and a human visual pass over the new layout.
+No open gate. The AWD rebuild (312 cards) is **committed and pushed** as
+`f9ba52d`. Remaining optional follow-ups, recorded in `TODO.md` and
+`ai-context\SESSION-2026-09-27-2.md`: de-duplicate `form-5`/`form-13`, add
+`typescript` to the page's highlighter tables, and a human visual pass over
+the new layout. The three untracked source files above are the only other
+pending decisions.
 
