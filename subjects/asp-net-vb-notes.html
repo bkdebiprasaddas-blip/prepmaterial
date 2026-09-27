@@ -1,0 +1,2242 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ASP.NET (VB.NET) Exam Notes</title>
+<style>
+:root{
+  --bg:#F8FAFC;--surface:#FFFFFF;--surface-muted:#F1F5F9;
+  --border:#E2E8F0;--border-strong:#CBD5E1;
+  --text:#0F172A;--text-2:#475569;--text-3:#64748B;--text-4:#94A3B8;
+  --primary:#4F46E5;--primary-soft:#EEF2FF;--primary-dark:#4338CA;
+  --violet:#7C3AED;--violet-soft:#F5F3FF;
+  --cyan:#0891B2;--cyan-soft:#ECFEFF;
+  --success:#16A34A;--success-soft:#F0FDF4;
+  --warn:#D97706;--warn-soft:#FFFBEB;
+  --danger:#DC2626;--danger-soft:#FEF2F2;
+  --code-bg:#0F172A;--code-text:#E2E8F0;--code-label:#94A3B8;
+  --shadow-sm:0 2px 6px rgba(15,23,42,.06);--shadow-md:0 8px 24px rgba(15,23,42,.08);
+  --r-sm:6px;--r-md:10px;--r-lg:14px;--r-xl:18px;--r-pill:999px;
+  --side-w:280px;
+}
+[data-theme="dark"]{
+  --bg:#0B1120;--surface:#111827;--surface-muted:#1E293B;
+  --border:#2A384E;--border-strong:#3B4A63;
+  --text:#F1F5F9;--text-2:#CBD5E1;--text-3:#94A3B8;--text-4:#64748B;
+  --primary:#A5B4FC;--primary-soft:#1E1B4B;--primary-dark:#C7D2FE;
+  --violet:#C4B5FD;--violet-soft:#2E1065;
+  --cyan:#67E8F9;--cyan-soft:#083344;
+  --success:#4ADE80;--success-soft:#0B2B1A;
+  --warn:#FBBF24;--warn-soft:#3A2506;
+  --danger:#F87171;--danger-soft:#3A0E0E;
+  --code-bg:#0B1220;--code-text:#DBEAFE;--code-label:#64748B;
+  --shadow-sm:0 2px 6px rgba(0,0,0,.35);--shadow-md:0 8px 24px rgba(0,0,0,.4);
+}
+@media (prefers-color-scheme: dark){
+  html:not([data-theme="light"]):not([data-theme="dark"]){
+    --bg:#0B1120;--surface:#111827;--surface-muted:#1E293B;
+    --border:#2A384E;--border-strong:#3B4A63;
+    --text:#F1F5F9;--text-2:#CBD5E1;--text-3:#94A3B8;--text-4:#64748B;
+    --primary:#A5B4FC;--primary-soft:#1E1B4B;--primary-dark:#C7D2FE;
+    --violet:#C4B5FD;--violet-soft:#2E1065;
+    --cyan:#67E8F9;--cyan-soft:#083344;
+    --success:#4ADE80;--success-soft:#0B2B1A;
+    --warn:#FBBF24;--warn-soft:#3A2506;
+    --danger:#F87171;--danger-soft:#3A0E0E;
+    --code-bg:#0B1220;--code-text:#DBEAFE;--code-label:#64748B;
+    --shadow-sm:0 2px 6px rgba(0,0,0,.35);--shadow-md:0 8px 24px rgba(0,0,0,.4);
+  }
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);line-height:1.65;font-size:16px}
+a{color:var(--primary-dark)}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,a:focus-visible{outline:3px solid var(--primary);outline-offset:2px;border-radius:4px}
+
+/* topbar */
+.topbar{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.tb-in{max-width:1320px;margin:0 auto;display:flex;align-items:center;gap:14px;padding:12px 20px}
+.logo{width:40px;height:40px;border-radius:11px;background:linear-gradient(135deg,var(--primary),var(--violet));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;flex:none}
+.tb-text{min-width:0;flex:1}
+.tb-title{font-size:16px;font-weight:800;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-sub{font-size:12px;color:var(--text-3);font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tb-actions{margin-left:auto;display:flex;gap:8px;align-items:center}
+.icon-btn{height:38px;padding:0 14px;border-radius:var(--r-pill);border:1px solid var(--border-strong);background:var(--surface);color:var(--text-2);display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;white-space:nowrap;flex:none;transition:background .15s,border-color .15s}
+.icon-btn:hover{background:var(--surface-muted);border-color:var(--primary)}
+#menuBtn{display:none}
+
+/* layout */
+.layout{max-width:1320px;margin:0 auto;display:grid;grid-template-columns:var(--side-w) 1fr;gap:28px;padding:24px 20px 80px}
+aside{position:sticky;top:78px;align-self:start;max-height:calc(100vh - 96px);overflow-y:auto;padding-right:4px}
+.sb-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:14px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.sb-title{font-size:11px;font-weight:800;letter-spacing:.1em;color:var(--text-4);text-transform:uppercase;margin-bottom:10px;padding:0 4px}
+.toc{list-style:none;display:flex;flex-direction:column;gap:2px}
+.toc a{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r-md);color:var(--text-2);text-decoration:none;font-size:13.5px;font-weight:600;border-left:3px solid transparent;transition:background .15s,color .15s}
+.toc a:hover{background:var(--surface-muted);color:var(--text)}
+.toc a.active{background:var(--primary-soft);color:var(--primary-dark);border-left-color:var(--primary)}
+.toc .n{width:20px;height:20px;border-radius:50%;background:var(--surface-muted);color:var(--text-3);font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.toc a.active .n{background:var(--primary);color:#fff}
+.legend{font-size:12.5px;color:var(--text-2)}
+.legend ol{margin-left:18px;display:flex;flex-direction:column;gap:5px;margin-top:2px}
+
+main{min-width:0}
+.hero{background:linear-gradient(120deg,var(--primary-soft),var(--violet-soft) 60%,var(--cyan-soft));border:1px solid var(--border);border-radius:var(--r-xl);padding:26px 28px;margin-bottom:26px}
+.hero h1{font-size:24px;font-weight:800;letter-spacing:-.02em}
+.hero p{color:var(--text-2);font-size:14px;margin-top:8px;max-width:760px}
+.hero .taglist{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.hero .tag{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:5px 12px;font-size:12px;font-weight:700;color:var(--text-2)}
+
+.topic{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--shadow-sm);padding:26px 28px;margin-bottom:22px;scroll-margin-top:80px}
+.topic-head{display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.topic-no{width:36px;height:36px;border-radius:var(--r-md);background:linear-gradient(135deg,var(--primary),var(--violet));color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;flex:none}
+.topic-head h2{font-size:20px;font-weight:800;letter-spacing:-.01em}
+
+.topic h3{font-size:15.5px;font-weight:800;margin:20px 0 8px;color:var(--text)}
+.topic h4{font-size:14px;font-weight:800;margin:16px 0 6px;color:var(--text-2)}
+.topic p{font-size:14.5px;color:var(--text-2);margin:6px 0}
+.topic ul,.topic ol{margin:8px 0 8px 20px;font-size:14.5px;color:var(--text-2);display:flex;flex-direction:column;gap:4px}
+.topic strong{color:var(--text)}
+hr.sep{border:none;border-top:1px dashed var(--border-strong);margin:18px 0}
+
+.callout{border-radius:var(--r-lg);padding:14px 16px;margin:14px 0;font-size:14px;border:1px solid var(--border)}
+.callout p{color:inherit;margin:4px 0}
+.callout .cal-lbl{font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;display:block}
+.callout.def{background:var(--primary-soft);border-color:var(--primary);color:var(--text)}
+.callout.def .cal-lbl{color:var(--primary-dark)}
+.callout.conclusion{background:var(--success-soft);border-color:var(--success);color:var(--text)}
+.callout.conclusion .cal-lbl{color:var(--success)}
+.callout.trick{background:var(--warn-soft);border-color:var(--warn);color:var(--text)}
+.callout.trick .cal-lbl{color:var(--warn)}
+.callout.note{background:var(--surface-muted);border-color:var(--border-strong);color:var(--text-2)}
+
+.codeblock{border-radius:var(--r-md);overflow:hidden;margin:12px 0;border:1px solid var(--border)}
+.cb-label{background:var(--surface-muted);color:var(--code-label);font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-bottom:1px solid var(--border)}
+.codeblock pre{background:var(--code-bg);color:var(--code-text);padding:14px 16px;overflow-x:auto;font-size:13px;line-height:1.55}
+.codeblock code{font-family:"SF Mono",Consolas,"Cascadia Code",Menlo,monospace;white-space:pre}
+
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th,td{text-align:left;padding:9px 11px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface-muted);color:var(--text-3);font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:800}
+td:first-child,th:first-child{font-weight:700;color:var(--text)}
+.tablewrap{overflow-x:auto;border:1px solid var(--border);border-radius:var(--r-md)}
+.tablewrap table{margin:0}
+
+.backtop{position:fixed;right:20px;bottom:20px;width:44px;height:44px;border-radius:50%;background:var(--primary);color:#fff;border:none;box-shadow:var(--shadow-md);display:none;align-items:center;justify-content:center;font-size:18px;z-index:40}
+.backtop.show{display:flex}
+#backdrop{position:fixed;inset:0;background:rgba(15,23,42,.55);z-index:45;opacity:0;pointer-events:none;transition:opacity .2s}
+#backdrop.show{opacity:1;pointer-events:auto}
+
+@media(max-width:900px){
+  .layout{grid-template-columns:1fr;padding:16px 14px 60px}
+  aside{position:fixed;top:0;left:0;bottom:0;width:min(300px,84vw);max-height:100vh;background:var(--surface);z-index:60;transform:translateX(-105%);transition:transform .2s;padding:16px;padding-top:max(16px,env(safe-area-inset-top));overflow-y:auto;border-right:1px solid var(--border)}
+  aside.open{transform:translateX(0)}
+  #backdrop{z-index:55}
+  #menuBtn{display:flex}
+  .topic{padding:20px 18px}
+}
+@media(max-width:640px){
+  .tb-in{padding:8px 12px;gap:8px}
+  .logo{width:32px;height:32px;font-size:12px;border-radius:9px}
+  .tb-sub{display:none}
+  .tb-title{font-size:14px}
+  .icon-btn{height:34px;padding:0 10px;font-size:12px;gap:4px}
+}
+@media(max-width:400px){
+  #menuBtn .mb-text{display:none}
+  #themeToggle .tt-text{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="tb-in">
+    <button class="icon-btn" id="menuBtn" aria-label="Toggle topic index">☰<span class="mb-text"> Index</span></button>
+    <div class="logo">VB</div>
+    <div class="tb-text">
+      <div class="tb-title">ASP.NET (VB.NET) Exam Notes</div>
+      <div class="tb-sub">Definition → Diagram → Explanation → Example → Conclusion</div>
+    </div>
+    <div class="tb-actions">
+      <button class="icon-btn" id="themeToggle"><span class="tt-icon">🌙</span><span class="tt-text"> Dark mode</span></button>
+    </div>
+  </div>
+</div>
+
+<div id="backdrop"></div>
+
+<div class="layout">
+
+  <aside id="sidebar">
+    <div class="sb-card">
+      <div class="sb-title">On this page</div>
+      <ul class="toc" id="toc">
+        <li><a href="#intro"><span class="n">1</span>What is ASP.NET?</a></li>
+        <li><a href="#dotnet-framework"><span class="n">2</span>.NET Framework</a></li>
+        <li><a href="#clr"><span class="n">3</span>CLR</a></li>
+        <li><a href="#adonet"><span class="n">4</span>ADO.NET Architecture</a></li>
+        <li><a href="#lifecycle"><span class="n">5</span>Application Life Cycle</a></li>
+        <li><a href="#session-cookies"><span class="n">6</span>Session vs Cookies</a></li>
+        <li><a href="#state-management"><span class="n">7</span>State Management</a></li>
+        <li><a href="#web-controls"><span class="n">8</span>Web Server Controls</a></li>
+        <li><a href="#event-driven"><span class="n">9</span>Event-Driven Programming</a></li>
+      </ul>
+    </div>
+    <div class="sb-card legend">
+      <div class="sb-title">Answer format</div>
+      <div class="legend">
+        <ol>
+          <li>Definition</li>
+          <li>Diagram / Architecture</li>
+          <li>Explanation (point-wise)</li>
+          <li>Syntax</li>
+          <li>VB.NET example</li>
+          <li>Advantages / comparison table</li>
+          <li>Exam conclusion</li>
+        </ol>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="hero">
+      <h1>ASP.NET with VB.NET — Exam-Oriented Notes</h1>
+      <p>Nine core topics written for quick reading and revision: definitions, architecture diagrams, point-wise explanations, syntax and VB.NET examples, comparison tables, and a short exam conclusion for each.</p>
+      <div class="taglist">
+        <span class="tag">.NET Framework</span>
+        <span class="tag">CLR</span>
+        <span class="tag">ADO.NET</span>
+        <span class="tag">Application Life Cycle</span>
+        <span class="tag">Session &amp; Cookies</span>
+        <span class="tag">State Management</span>
+        <span class="tag">Web Server Controls</span>
+        <span class="tag">Event-Driven Programming</span>
+      </div>
+    </div>
+
+    <!-- 1. WHAT IS ASP.NET -->
+    <section class="topic" id="intro">
+      <div class="topic-head"><span class="topic-no">1</span><h2>What is ASP.NET?</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p>ASP.NET is a Microsoft web development framework used to create dynamic, interactive and data-driven web applications. It supports server-side programming using languages such as <strong>VB.NET and C#</strong>.</p>
+      </div>
+
+      <h3>Basic Architecture</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>        User / Client
+             │
+             │ HTTP Request
+             ▼
+        Web Browser
+             │
+             ▼
+      ┌───────────────┐
+      │   Web Server  │
+      │   IIS/ASP.NET │
+      └───────┬───────┘
+              │
+              ▼
+       VB.NET Program
+              │
+              ▼
+          Database
+              │
+              ▼
+      HTTP Response
+              │
+              ▼
+        Web Browser</code></pre>
+      </div>
+
+      <h3>Features of ASP.NET</h3>
+      <ul>
+        <li>Supports server-side programming.</li>
+        <li>Supports VB.NET and C#.</li>
+        <li>Provides built-in security features.</li>
+        <li>Supports database connectivity.</li>
+        <li>Provides reusable web controls.</li>
+        <li>Supports session and state management.</li>
+        <li>Allows rapid development of web applications.</li>
+      </ul>
+
+      <h3>Example</h3>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Protected Sub Page_Load(sender As Object, e As EventArgs)
+    Response.Write("Welcome to ASP.NET")
+End Sub</code></pre>
+      </div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p>ASP.NET provides a powerful framework for developing dynamic, secure and database-driven web applications.</p>
+      </div>
+    </section>
+
+    <!-- 2. .NET FRAMEWORK -->
+    <section class="topic" id="dotnet-framework">
+      <div class="topic-head"><span class="topic-no">2</span><h2>.NET Framework</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p>The <strong>.NET Framework</strong> is a software development framework developed by <strong>Microsoft</strong> for building and running <strong>Windows, web, and other applications</strong>. It provides a common environment where programs written in languages such as <strong>VB.NET, C#, and F#</strong> can be developed and executed.</p>
+      </div>
+
+      <h3>Architecture / Diagram</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>              .NET APPLICATIONS
+        ┌─────────────────────────┐
+        │  Windows Applications   │
+        │  Web Applications       │
+        │  Console Applications   │
+        └────────────┬────────────┘
+                     │
+                     ▼
+        ┌─────────────────────────┐
+        │    .NET Framework       │
+        │                         │
+        │  ┌───────────────────┐  │
+        │  │   Class Library   │  │
+        │  │       (FCL)       │  │
+        │  └───────────────────┘  │
+        │                         │
+        │  ┌───────────────────┐  │
+        │  │      CLR          │  │
+        │  │ Common Language   │  │
+        │  │    Runtime        │  │
+        │  └───────────────────┘  │
+        └────────────┬────────────┘
+                     │
+                     ▼
+             Operating System</code></pre>
+      </div>
+
+      <h3>Main Components of .NET Framework</h3>
+
+      <h4>A. CLR — Common Language Runtime</h4>
+      <p>The <strong>CLR</strong> is the execution environment of the .NET Framework. It manages the execution of .NET programs and provides services such as:</p>
+      <ul>
+        <li>Memory management</li>
+        <li>Exception handling</li>
+        <li>Security</li>
+        <li>Thread management</li>
+        <li>Garbage collection</li>
+        <li>Code execution</li>
+      </ul>
+      <p><strong>Example:</strong> When a VB.NET program runs, the CLR manages its execution.</p>
+
+      <h4>B. FCL — Framework Class Library</h4>
+      <p>The <strong>Framework Class Library (FCL)</strong> is a collection of reusable classes, interfaces and data types provided by .NET. It provides classes for:</p>
+      <ul>
+        <li>File handling</li>
+        <li>Database connectivity</li>
+        <li>Web development</li>
+        <li>Networking</li>
+        <li>Collections</li>
+        <li>XML processing</li>
+        <li>Input/output operations</li>
+      </ul>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Dim file As New System.IO.FileInfo("data.txt")</code></pre>
+      </div>
+      <p>Here, <code>FileInfo</code> is a class provided by the .NET class library.</p>
+
+      <h4>C. CTS — Common Type System</h4>
+      <p><strong>CTS</strong> defines the standard data types and rules that all .NET-supported languages follow. For example:</p>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>VB.NET        .NET Type
+-------------------------
+Integer   →   System.Int32
+String    →   System.String
+Boolean   →   System.Boolean</code></pre>
+      </div>
+      <p>This allows different .NET languages to work together.</p>
+
+      <h4>D. CLS — Common Language Specification</h4>
+      <p><strong>CLS</strong> defines a set of common rules that .NET languages should follow so that code written in different languages can interact with each other.</p>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>VB.NET Code  ─────┐
+                  ├──→ .NET Framework
+C# Code      ─────┤
+                  │
+F# Code      ─────┘</code></pre>
+      </div>
+
+      <h3>How a .NET Program Executes</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>VB.NET / C# Source Code
+          │
+          ▼
+       Compiler
+          │
+          ▼
+      MSIL / CIL
+          │
+          ▼
+         CLR
+          │
+          ▼
+       JIT Compiler
+          │
+          ▼
+    Machine Code
+          │
+          ▼
+       Execution</code></pre>
+      </div>
+      <ol>
+        <li>Programmer writes code in <strong>VB.NET or another .NET language</strong>.</li>
+        <li>The language compiler converts the source code into <strong>MSIL/CIL (Intermediate Language)</strong>.</li>
+        <li>CLR loads and manages the program.</li>
+        <li><strong>JIT (Just-In-Time) compiler</strong> converts the IL into machine code.</li>
+        <li>The machine code is executed by the computer.</li>
+      </ol>
+
+      <h3>Advantages of .NET Framework</h3>
+      <ul>
+        <li><strong>Language independence</strong> — supports multiple programming languages.</li>
+        <li><strong>Automatic memory management</strong> — Garbage Collector manages unused memory.</li>
+        <li><strong>Security</strong> — provides various security mechanisms.</li>
+        <li><strong>Exception handling</strong> — provides structured error handling.</li>
+        <li><strong>Code reusability</strong> — provides a large class library.</li>
+        <li><strong>Interoperability</strong> — different .NET languages can work together.</li>
+        <li><strong>Easy development</strong> — provides ready-made classes and tools.</li>
+        <li><strong>Web support</strong> — supports development of ASP.NET applications.</li>
+      </ul>
+
+      <h3>Important Terms for Exam</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Term</th><th>Full Form</th><th>Main Purpose</th></tr>
+        <tr><td>CLR</td><td>Common Language Runtime</td><td>Executes and manages .NET programs</td></tr>
+        <tr><td>FCL</td><td>Framework Class Library</td><td>Provides reusable classes</td></tr>
+        <tr><td>CTS</td><td>Common Type System</td><td>Defines common data types</td></tr>
+        <tr><td>CLS</td><td>Common Language Specification</td><td>Defines language interoperability rules</td></tr>
+        <tr><td>MSIL/CIL</td><td>Microsoft / Common Intermediate Language</td><td>Intermediate code generated by compiler</td></tr>
+        <tr><td>JIT</td><td>Just-In-Time Compiler</td><td>Converts IL into machine code</td></tr>
+      </table></div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p>The <strong>.NET Framework</strong> provides a common and managed environment for developing and executing applications. Its major components such as <strong>CLR, FCL, CTS and CLS</strong> make application development easier, secure and language-independent.</p>
+      </div>
+    </section>
+
+    <!-- 3. CLR -->
+    <section class="topic" id="clr">
+      <div class="topic-head"><span class="topic-no">3</span><h2>CLR (Common Language Runtime)</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>CLR (Common Language Runtime)</strong> is the <strong>execution environment of the .NET Framework</strong>. It manages the execution of .NET programs and provides important services such as <strong>memory management, exception handling, security, thread management, and garbage collection</strong>. In simple words, <strong>CLR acts as a bridge between a .NET application and the operating system</strong>.</p>
+      </div>
+
+      <h3>CLR Architecture / Diagram</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>             VB.NET / C# / F# Program
+                       │
+                       ▼
+                  Language
+                  Compiler
+                       │
+                       ▼
+                MSIL / CIL Code
+                + Metadata
+                       │
+                       ▼
+              ┌─────────────────┐
+              │       CLR       │
+              │                 │
+              │ ┌─────────────┐ │
+              │ │ JIT Compiler│ │
+              │ └─────────────┘ │
+              │ ┌─────────────┐ │
+              │ │Garbage      │ │
+              │ │Collection   │ │
+              │ └─────────────┘ │
+              │ ┌─────────────┐ │
+              │ │Exception    │ │
+              │ │Handling     │ │
+              │ └─────────────┘ │
+              │ ┌─────────────┐ │
+              │ │Security     │ │
+              │ └─────────────┘ │
+              │ ┌─────────────┐ │
+              │ │Thread       │ │
+              │ │Management   │ │
+              │ └─────────────┘ │
+              └───────┬─────────┘
+                      │
+                      ▼
+                Machine Code
+                      │
+                      ▼
+               Operating System</code></pre>
+      </div>
+
+      <h3>Components / Services of CLR</h3>
+
+      <h4>1. JIT Compiler</h4>
+      <p><strong>JIT (Just-In-Time) Compiler</strong> converts <strong>MSIL/CIL code into native machine code</strong> at runtime.</p>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>MSIL / CIL
+    │
+    ▼
+JIT Compiler
+    │
+    ▼
+Machine Code</code></pre>
+      </div>
+      <p>This allows the program to execute on the target computer.</p>
+
+      <h4>2. Garbage Collector</h4>
+      <p>The <strong>Garbage Collector (GC)</strong> automatically identifies objects that are no longer being used and releases their memory.</p>
+      <p><strong>Benefit:</strong> it reduces manual memory management and helps prevent memory leaks.</p>
+
+      <h4>3. Exception Handling</h4>
+      <p>CLR provides a mechanism for handling runtime errors using exceptions.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Try
+    Dim a As Integer = 10
+    Dim b As Integer = 0
+    Dim result As Integer = a \ b
+Catch ex As Exception
+    Console.WriteLine("Error occurred")
+End Try</code></pre>
+      </div>
+
+      <h4>4. Security</h4>
+      <p>CLR provides security mechanisms to control the execution of managed code and protect applications and resources.</p>
+
+      <h4>5. Thread Management</h4>
+      <p>CLR manages threads used by applications and provides support for <strong>multithreaded programming</strong>.</p>
+
+      <h4>6. Memory Management</h4>
+      <p>CLR automatically manages memory allocation and deallocation. The programmer generally does not need to manually free memory for managed objects.</p>
+
+      <h4>7. Type Checking</h4>
+      <p>CLR works with the <strong>Common Type System (CTS)</strong> to ensure that data types are used correctly and consistently.</p>
+
+      <h4>8. Code Verification</h4>
+      <p>CLR can verify managed code to help ensure that it follows the rules required for safe execution.</p>
+
+      <h3>Functions of CLR</h3>
+      <ol>
+        <li><strong>Program execution</strong> — executes .NET applications.</li>
+        <li><strong>Memory management</strong> — allocates and manages memory.</li>
+        <li><strong>Garbage collection</strong> — removes unused objects from memory.</li>
+        <li><strong>Exception handling</strong> — handles runtime errors.</li>
+        <li><strong>Security management</strong> — provides security mechanisms.</li>
+        <li><strong>Thread management</strong> — manages application threads.</li>
+        <li><strong>Type safety</strong> — ensures proper use of data types.</li>
+        <li><strong>JIT compilation</strong> — converts MSIL/CIL into native machine code.</li>
+        <li><strong>Language interoperability</strong> — allows different .NET languages to work together.</li>
+        <li><strong>Debugging and profiling support</strong> — provides runtime support for development and diagnostics.</li>
+      </ol>
+
+      <h3>Execution Process of CLR</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>VB.NET Source Code
+       │
+       ▼
+VB.NET Compiler
+       │
+       ▼
+    MSIL/CIL
+       │
+       ▼
+      CLR
+       │
+       ▼
+ JIT Compiler
+       │
+       ▼
+ Native Machine Code
+       │
+       ▼
+   Execution</code></pre>
+      </div>
+      <p><strong>Step 1:</strong> Programmer writes a program in VB.NET.<br>
+      <strong>Step 2:</strong> VB.NET compiler converts the source code into <strong>MSIL/CIL</strong>.<br>
+      <strong>Step 3:</strong> CLR loads the MSIL and required metadata.<br>
+      <strong>Step 4:</strong> JIT compiler converts the required MSIL instructions into native machine code.<br>
+      <strong>Step 5:</strong> The native code is executed by the operating system.</p>
+
+      <h3>VB.NET Example</h3>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Module Program
+
+    Sub Main()
+
+        Dim a As Integer = 10
+        Dim b As Integer = 20
+        Dim sum As Integer
+
+        sum = a + b
+
+        Console.WriteLine("Sum = " &amp; sum)
+
+    End Sub
+
+End Module</code></pre>
+      </div>
+      <div class="codeblock">
+        <div class="cb-label">Output</div>
+        <pre><code>Sum = 30</code></pre>
+      </div>
+      <h4>What CLR does here</h4>
+      <ol>
+        <li>The VB.NET compiler converts the program into <strong>MSIL/CIL</strong>.</li>
+        <li>CLR loads the compiled code.</li>
+        <li>JIT compiler converts the required IL into machine code.</li>
+        <li>CLR manages the program's <strong>memory and execution</strong>.</li>
+        <li>The result is displayed on the screen.</li>
+      </ol>
+
+      <h3>Advantages of CLR</h3>
+      <ul>
+        <li>Automatic memory management</li>
+        <li>Garbage collection</li>
+        <li>Improved security</li>
+        <li>Structured exception handling</li>
+        <li>Language interoperability</li>
+        <li>Efficient code execution through JIT</li>
+        <li>Thread management</li>
+        <li>Type safety</li>
+        <li>Simplifies application development</li>
+        <li>Provides a managed execution environment</li>
+      </ul>
+
+      <h3>Quick Revision</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Component / Service</th><th>Function</th></tr>
+        <tr><td>CLR</td><td>Executes and manages .NET programs</td></tr>
+        <tr><td>JIT</td><td>Converts IL into machine code</td></tr>
+        <tr><td>Garbage Collector</td><td>Releases unused memory</td></tr>
+        <tr><td>Exception Handler</td><td>Handles runtime errors</td></tr>
+        <tr><td>Security</td><td>Controls secure code execution</td></tr>
+        <tr><td>Thread Manager</td><td>Manages threads</td></tr>
+        <tr><td>Type System</td><td>Ensures type safety</td></tr>
+        <tr><td>Memory Manager</td><td>Manages application memory</td></tr>
+      </table></div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p><strong>CLR is the heart of the .NET Framework's managed execution environment.</strong> It executes .NET programs and provides services such as <strong>JIT compilation, memory management, garbage collection, exception handling, security, and thread management</strong>, making application development easier and more reliable.</p>
+      </div>
+    </section>
+
+    <!-- 4. ADO.NET -->
+    <section class="topic" id="adonet">
+      <div class="topic-head"><span class="topic-no">4</span><h2>ADO.NET Architecture</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>ADO.NET (ActiveX Data Objects .NET)</strong> is a data access technology provided by the <strong>.NET Framework</strong>. It is used to <strong>connect .NET applications with databases</strong>, execute SQL commands, retrieve data, and manipulate database records. ADO.NET supports two major approaches to data access: <strong>Connected Architecture</strong> and <strong>Disconnected Architecture</strong>.</p>
+      </div>
+
+      <h3>ADO.NET Architecture Diagram</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>                    .NET APPLICATION
+                          │
+                          ▼
+                 ┌──────────────────┐
+                 │    ADO.NET       │
+                 └────────┬─────────┘
+                          │
+             ┌────────────┴────────────┐
+             │                         │
+             ▼                         ▼
+    CONNECTED ARCHITECTURE     DISCONNECTED ARCHITECTURE
+             │                         │
+             ▼                         ▼
+      Connection Object          DataAdapter
+             │                         │
+             ▼                         ▼
+       Command Object            DataSet
+             │                         │
+             ▼                    ┌────┴────┐
+      DataReader                  │         │
+             │                DataTable  DataRelation
+             ▼
+        DATABASE
+             │
+             ▼
+      SQL Server / Other
+       Data Source</code></pre>
+      </div>
+
+      <h3>Main Components of ADO.NET</h3>
+      <p>ADO.NET mainly consists of two groups of components:</p>
+
+      <h4>A. .NET Data Provider</h4>
+      <p>The <strong>Data Provider</strong> is used for direct communication between an application and a data source. Important components:</p>
+      <ul>
+        <li>Connection</li>
+        <li>Command</li>
+        <li>DataReader</li>
+        <li>DataAdapter</li>
+      </ul>
+
+      <h4>B. DataSet</h4>
+      <p><strong>DataSet</strong> is used mainly in the <strong>disconnected architecture</strong>. It can store data in memory without keeping a continuous connection with the database.</p>
+
+      <h3>ADO.NET Data Provider Architecture</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>             .NET APPLICATION
+                    │
+                    ▼
+          ┌───────────────────┐
+          │   Data Provider   │
+          └─────────┬─────────┘
+                    │
+       ┌────────────┼────────────┐
+       ▼            ▼            ▼
+  Connection     Command     DataReader
+       │            │            │
+       └────────────┼────────────┘
+                    ▼
+                DATABASE</code></pre>
+      </div>
+      <p>For SQL Server, commonly used classes belong to <code>System.Data.SqlClient</code>: <code>SqlConnection</code>, <code>SqlCommand</code>, <code>SqlDataReader</code>, <code>SqlDataAdapter</code>.</p>
+
+      <h3>5. Connected Architecture</h3>
+      <p>In <strong>connected architecture</strong>, the application maintains an <strong>active connection with the database while data is being retrieved or manipulated</strong>. The connection generally remains open while commands are executed and data is read.</p>
+
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>             .NET APPLICATION
+                    │
+                    ▼
+             SqlConnection
+                    │
+                    │ Open Connection
+                    ▼
+              SqlCommand
+                    │
+                    │ SQL Query
+                    ▼
+               DATABASE
+                    │
+                    │ Result
+                    ▼
+             SqlDataReader
+                    │
+                    ▼
+             .NET APPLICATION</code></pre>
+      </div>
+
+      <h4>1. Connection</h4>
+      <p>The <strong>Connection object</strong> establishes a connection between the application and the database.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Dim con As New SqlConnection(
+    "Data Source=.;Initial Catalog=StudentDB;Integrated Security=True"
+)
+
+con.Open()</code></pre>
+      </div>
+      <p>Important methods: <code>Open()</code> — opens the connection, <code>Close()</code> — closes the connection.</p>
+
+      <h4>2. Command</h4>
+      <p>The <strong>Command object</strong> is used to execute SQL statements or stored procedures.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Dim cmd As New SqlCommand(
+    "SELECT * FROM Student", con
+)</code></pre>
+      </div>
+      <p>Common methods: <code>ExecuteReader()</code>, <code>ExecuteScalar()</code>, <code>ExecuteNonQuery()</code>.</p>
+
+      <h4>3. DataReader</h4>
+      <p><strong>DataReader</strong> provides a fast, forward-only and read-only way to retrieve data from a database.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Dim dr As SqlDataReader = cmd.ExecuteReader()
+
+While dr.Read()
+    Console.WriteLine(dr("Name"))
+End While</code></pre>
+      </div>
+      <p>Characteristics: read-only, forward-only, fast, requires an active database connection.</p>
+
+      <h4>Connected Architecture — Working</h4>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>1. Create Connection
+        ↓
+2. Open Connection
+        ↓
+3. Create Command
+        ↓
+4. Execute SQL Query
+        ↓
+5. Read/Modify Data
+        ↓
+6. Close Connection</code></pre>
+      </div>
+
+      <h4>Advantages of Connected Architecture</h4>
+      <ul>
+        <li>Provides <strong>fast data access</strong>.</li>
+        <li>Suitable for operations requiring continuous database communication.</li>
+        <li>Uses relatively less memory for large result sets.</li>
+        <li><code>DataReader</code> provides efficient sequential reading.</li>
+        <li>Suitable for real-time database operations.</li>
+      </ul>
+      <h4>Disadvantages</h4>
+      <ul>
+        <li>Database connection must remain open.</li>
+        <li>Database resources remain occupied.</li>
+        <li>Not suitable when a connection is expensive or unreliable.</li>
+        <li>Multiple users can increase the number of active connections.</li>
+      </ul>
+
+      <h3>6. Disconnected Architecture</h3>
+      <p>In <strong>disconnected architecture</strong>, the application <strong>does not need to maintain a continuous connection with the database</strong>. Data is retrieved from the database, stored in memory, and the database connection can then be closed. Main components: <strong>DataAdapter, DataSet, DataTable, DataRow, DataColumn, DataRelation</strong>.</p>
+
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>                 .NET APPLICATION
+                       │
+                       ▼
+                  DataAdapter
+                       │
+                ┌──────┴──────┐
+                │             │
+             SELECT        UPDATE
+                │             │
+                ▼             ▲
+             DATABASE ◄────────┘
+                │
+                │ Data
+                ▼
+              DataSet
+        ┌───────────────┐
+        │               │
+        ▼               ▼
+    DataTable       DataRelation
+        │
+   ┌────┴────┐
+   ▼         ▼
+DataRow   DataColumn</code></pre>
+      </div>
+
+      <h4>1. DataAdapter</h4>
+      <p><strong>DataAdapter</strong> acts as a bridge between the database and the <strong>DataSet</strong>. It retrieves data from the database and fills the DataSet, and can also send changes made in the DataSet back to the database.</p>
+      <p>Important methods: <code>Fill()</code>, <code>Update()</code>.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Dim da As New SqlDataAdapter(
+    "SELECT * FROM Student", con
+)
+
+Dim ds As New DataSet()
+
+da.Fill(ds, "Student")</code></pre>
+      </div>
+
+      <h4>2. DataSet</h4>
+      <p>A <strong>DataSet</strong> is an in-memory representation of data. It can contain one or more DataTables.</p>
+      <div class="callout note">
+        <p><strong>DataSet does not require a permanent connection to the database while the application works with the data.</strong></p>
+      </div>
+
+      <h4>3. DataTable</h4>
+      <p>A <strong>DataTable</strong> represents a table of data inside a DataSet, e.g. a <em>Student</em> table with ID, Name and Age columns.</p>
+
+      <h4>4. DataRow</h4>
+      <p>A <strong>DataRow</strong> represents one record/row in a DataTable.</p>
+
+      <h4>5. DataColumn</h4>
+      <p>A <strong>DataColumn</strong> represents a column or field in a DataTable.</p>
+
+      <h4>6. DataRelation</h4>
+      <p><strong>DataRelation</strong> represents a relationship between two DataTables inside a DataSet — useful when working with related tables (for example, a Student table linked to a Course table through <code>CourseID</code>).</p>
+
+      <h4>Disconnected Architecture — Working</h4>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>1. Create Connection
+        ↓
+2. Create DataAdapter
+        ↓
+3. Open Connection
+        ↓
+4. DataAdapter retrieves data
+        ↓
+5. Fill DataSet
+        ↓
+6. Connection can be closed
+        ↓
+7. Work with DataSet in memory
+        ↓
+8. DataAdapter.Update()
+        ↓
+9. Changes sent back to Database</code></pre>
+      </div>
+
+      <h3>VB.NET Example of Disconnected Architecture</h3>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Imports System.Data.SqlClient
+
+Module Program
+
+    Sub Main()
+
+        Dim con As New SqlConnection(
+            "Data Source=.;Initial Catalog=StudentDB;Integrated Security=True"
+        )
+
+        Dim da As New SqlDataAdapter(
+            "SELECT * FROM Student", con
+        )
+
+        Dim ds As New DataSet()
+
+        da.Fill(ds, "Student")
+
+        For Each row As DataRow In ds.Tables("Student").Rows
+            Console.WriteLine(row("Name"))
+        Next
+
+    End Sub
+
+End Module</code></pre>
+      </div>
+      <p><code>Fill()</code> retrieves the records and stores them in the DataSet. After the data has been loaded, the application can work with the DataSet without continuously communicating with the database.</p>
+
+      <h3>Connected vs Disconnected Architecture</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Basis</th><th>Connected</th><th>Disconnected</th></tr>
+        <tr><td>Connection</td><td>Continuous connection</td><td>Needed mainly during data transfer</td></tr>
+        <tr><td>Main Objects</td><td>Connection, Command, DataReader</td><td>DataAdapter, DataSet</td></tr>
+        <tr><td>Data Storage</td><td>Directly reads from database</td><td>Stores data in memory</td></tr>
+        <tr><td>Reader</td><td>DataReader</td><td>DataSet / DataTable</td></tr>
+        <tr><td>Memory</td><td>Generally lower for sequential reading</td><td>Requires memory for DataSet</td></tr>
+        <tr><td>Speed</td><td>Fast for sequential data access</td><td>Suitable for working with cached data</td></tr>
+        <tr><td>Database Connection</td><td>Remains active during operation</td><td>Can be closed after data retrieval</td></tr>
+        <tr><td>Best suited for</td><td>Real-time/direct operations</td><td>Web applications and data manipulation</td></tr>
+        <tr><td>Example</td><td><code>SqlCommand + SqlDataReader</code></td><td><code>SqlDataAdapter + DataSet</code></td></tr>
+      </table></div>
+
+      <h3>Complete ADO.NET Architecture — Exam Diagram</h3>
+      <p>For a long-answer question, this diagram is useful:</p>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>                         ADO.NET
+                            │
+              ┌─────────────┴─────────────┐
+              │                           │
+              ▼                           ▼
+       CONNECTED                    DISCONNECTED
+       ARCHITECTURE                 ARCHITECTURE
+              │                           │
+      ┌───────┼───────┐             ┌────┴────┐
+      │       │       │             │         │
+      ▼       ▼       ▼             ▼         ▼
+ Connection Command DataReader  DataAdapter DataSet
+      │       │       │             │         │
+      │       │       │             │    ┌────┼────┐
+      │       │       │             │    │    │    │
+      └───────┴───────┘             │    ▼    ▼    ▼
+              │                     │ DataTable  DataRelation
+              ▼                     │    │
+          DATABASE ◄────────────────┘    ├── DataRow
+                                         └── DataColumn</code></pre>
+      </div>
+
+      <div class="callout trick"><span class="cal-lbl">Important Exam Points</span>
+        <p><strong>Connected:</strong> Connection → Command → DataReader → Database</p>
+        <p><strong>Disconnected:</strong> DataAdapter → DataSet → DataTable → DataRow/DataColumn</p>
+        <p><strong>DataReader</strong> = Connected + Forward-only + Read-only</p>
+        <p><strong>DataSet</strong> = Disconnected + In-memory + Can contain multiple tables</p>
+        <p><strong>DataAdapter</strong> = Bridge between Database and DataSet</p>
+      </div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p><strong>ADO.NET provides two major methods of database access.</strong> The <strong>connected architecture</strong> maintains an active connection and uses objects such as <code>Connection</code>, <code>Command</code>, and <code>DataReader</code>. The <strong>disconnected architecture</strong> uses <code>DataAdapter</code> and <code>DataSet</code> to retrieve and work with data in memory without maintaining a continuous database connection.</p>
+      </div>
+    </section>
+
+    <!-- 5. APPLICATION LIFE CYCLE -->
+    <section class="topic" id="lifecycle">
+      <div class="topic-head"><span class="topic-no">5</span><h2>ASP.NET Application Life Cycle</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p>The <strong>ASP.NET Application Life Cycle</strong> is the sequence of events that occurs from the <strong>start of an ASP.NET application until the application is stopped or restarted</strong>. It describes how ASP.NET <strong>creates the application, initializes resources, processes requests, handles errors, and finally shuts down the application</strong>.</p>
+      </div>
+
+      <h3>Application Life Cycle Diagram</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>                ASP.NET Application Starts
+                         │
+                         ▼
+                Application_Start
+                         │
+                         ▼
+             Application Initialization
+                         │
+                         ▼
+               First Client Request
+                         │
+                         ▼
+              ┌─────────────────────┐
+              │   Request Handling  │
+              │                     │
+              │ BeginRequest        │
+              │ AuthenticateRequest │
+              │ AuthorizeRequest    │
+              │ ResolveRequestCache │
+              │                     │
+              │ AcquireRequestState │
+              │                     │
+              │ Execute Handler     │
+              │                     │
+              │ ReleaseRequestState │
+              │ UpdateRequestCache  │
+              │ EndRequest          │
+              └──────────┬──────────┘
+                         │
+                         ▼
+                  Response Sent
+                         │
+                         ▼
+              More Requests?
+                 /           \
+               YES            NO
+                │              │
+                ▼              ▼
+        Process Next      Application_End
+          Request               │
+                               ▼
+                       Application Stops</code></pre>
+      </div>
+
+      <h3>Main Stages of Application Life Cycle</h3>
+      <ol>
+        <li><strong>Application Start</strong></li>
+        <li><strong>Request Processing</strong></li>
+        <li><strong>Application Running</strong></li>
+        <li><strong>Application End</strong></li>
+      </ol>
+
+      <h3>1. Application Start</h3>
+      <p>The application starts when ASP.NET receives the <strong>first request</strong> for an application after it has been started or restarted. ASP.NET creates an instance of the application's <code>HttpApplication</code> class and initializes the application.</p>
+      <h4>Application_Start</h4>
+      <p>Occurs when the application starts. Generally used for <strong>application-wide initialization</strong>, such as:</p>
+      <ul>
+        <li>Registering routes</li>
+        <li>Configuring application-level settings</li>
+        <li>Initializing application resources</li>
+        <li>Registering filters</li>
+        <li>Setting up other application-wide objects</li>
+      </ul>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Sub Application_Start(ByVal sender As Object,
+                      ByVal e As EventArgs)
+
+    'Application initialization code
+
+End Sub</code></pre>
+      </div>
+
+      <h3>2. Request Processing</h3>
+      <p>After the application has started, ASP.NET receives requests from clients such as web browsers. For every request, ASP.NET passes through a series of events.</p>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>Client Request
+      │
+      ▼
+  BeginRequest
+      │
+      ▼
+AuthenticateRequest
+      │
+      ▼
+ AuthorizeRequest
+      │
+      ▼
+ResolveRequestCache
+      │
+      ▼
+AcquireRequestState
+      │
+      ▼
+Execute Request Handler
+      │
+      ▼
+ReleaseRequestState
+      │
+      ▼
+UpdateRequestCache
+      │
+      ▼
+ EndRequest
+      │
+      ▼
+Client Response</code></pre>
+      </div>
+
+      <h3>Important Request Life Cycle Events</h3>
+
+      <h4>1. BeginRequest</h4>
+      <p>The <strong>first event</strong> in the request-processing pipeline. Occurs when ASP.NET begins processing a request.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Sub Application_BeginRequest(
+    ByVal sender As Object,
+    ByVal e As EventArgs)
+
+End Sub</code></pre>
+      </div>
+      <p>Purpose: operations at the beginning of a request, logging, request preprocessing.</p>
+
+      <h4>2. AuthenticateRequest</h4>
+      <p>ASP.NET determines the <strong>identity of the user</strong>. Authentication answers: <em>"Who are you?"</em></p>
+
+      <h4>3. AuthorizeRequest</h4>
+      <p>After authentication, ASP.NET determines whether the authenticated user has permission to access the requested resource. Authorization answers: <em>"Are you allowed to access it?"</em></p>
+
+      <h4>4. ResolveRequestCache</h4>
+      <p>ASP.NET checks whether the requested response is already available in the <strong>cache</strong>. If a cached response exists, ASP.NET may use it instead of processing the request again — improving performance.</p>
+
+      <h4>5. AcquireRequestState</h4>
+      <p>ASP.NET obtains the state information associated with the request (session state, application state), allowing the application to access session-related information.</p>
+
+      <h4>6. Execute Request Handler</h4>
+      <p>ASP.NET identifies and executes the appropriate handler for the request. For a Web Forms application, this may involve processing an <strong><code>.aspx</code></strong> page, which is processed to generate the required response.</p>
+
+      <h4>7. ReleaseRequestState</h4>
+      <p>After request processing is completed, ASP.NET releases the request-related state — for example, session-related resources can be released or updated.</p>
+
+      <h4>8. UpdateRequestCache</h4>
+      <p>ASP.NET may update the cache with the generated response, depending on the application's caching configuration.</p>
+
+      <h4>9. EndRequest</h4>
+      <p>The final event in the request pipeline — occurs when ASP.NET has finished processing the request.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Sub Application_EndRequest(
+    ByVal sender As Object,
+    ByVal e As EventArgs)
+
+End Sub</code></pre>
+      </div>
+      <p>Can be used for logging, cleanup, and final request processing.</p>
+
+      <h3>3. Application Running</h3>
+      <p>After startup, the application can process many requests, remaining active until an event causes ASP.NET to restart or shut it down.</p>
+
+      <h3>4. Application End</h3>
+      <p>An ASP.NET application may terminate or restart because of events such as:</p>
+      <ul>
+        <li>Application/server shutdown</li>
+        <li>Configuration changes</li>
+        <li>Application restart</li>
+        <li>Server restart</li>
+        <li>Changes to application files</li>
+        <li>IIS application pool recycling</li>
+      </ul>
+      <p>When the application is shutting down, the <strong><code>Application_End</code></strong> event occurs.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Sub Application_End(
+    ByVal sender As Object,
+    ByVal e As EventArgs)
+
+    'Cleanup code
+
+End Sub</code></pre>
+      </div>
+
+      <h3>Application Life Cycle in Global.asax</h3>
+      <p>In ASP.NET Web Forms, application-level events are commonly handled in <strong><code>Global.asax</code></strong>.</p>
+      <div class="codeblock">
+        <div class="cb-label">Global.asax (VB)</div>
+        <pre><code>&lt;%@ Application Language="VB" %&gt;
+
+&lt;script runat="server"&gt;
+
+    Sub Application_Start(
+        ByVal sender As Object,
+        ByVal e As EventArgs)
+
+        'Application starts
+
+    End Sub
+
+    Sub Application_BeginRequest(
+        ByVal sender As Object,
+        ByVal e As EventArgs)
+
+        'Request begins
+
+    End Sub
+
+    Sub Application_EndRequest(
+        ByVal sender As Object,
+        ByVal e As EventArgs)
+
+        'Request ends
+
+    End Sub
+
+    Sub Application_End(
+        ByVal sender As Object,
+        ByVal e As EventArgs)
+
+        'Application ends
+
+    End Sub
+
+&lt;/script&gt;</code></pre>
+      </div>
+
+      <h3>Application State vs Session State</h3>
+      <h4>Application State</h4>
+      <p>Shared by <strong>all users</strong> of the application.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Application("CollegeName") = "Satyam College"</code></pre>
+      </div>
+      <h4>Session State</h4>
+      <p>Stores information for <strong>one particular user/session</strong>.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Session("UserName") = "Rahul"</code></pre>
+      </div>
+
+      <h3>Important Events — Quick Revision</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Event</th><th>Purpose</th></tr>
+        <tr><td>Application_Start</td><td>Initializes the application</td></tr>
+        <tr><td>BeginRequest</td><td>Begins processing a request</td></tr>
+        <tr><td>AuthenticateRequest</td><td>Authenticates the user</td></tr>
+        <tr><td>AuthorizeRequest</td><td>Checks user's permissions</td></tr>
+        <tr><td>ResolveRequestCache</td><td>Checks response cache</td></tr>
+        <tr><td>AcquireRequestState</td><td>Obtains session/request state</td></tr>
+        <tr><td>Request Handler</td><td>Processes the requested resource</td></tr>
+        <tr><td>ReleaseRequestState</td><td>Releases request state</td></tr>
+        <tr><td>UpdateRequestCache</td><td>Updates cache if applicable</td></tr>
+        <tr><td>EndRequest</td><td>Completes request processing</td></tr>
+        <tr><td>Application_End</td><td>Performs application shutdown/cleanup</td></tr>
+      </table></div>
+
+      <div class="callout trick"><span class="cal-lbl">Easy Memory Trick</span>
+        <p>START → BEGIN → AUTHENTICATE → AUTHORIZE → CACHE → STATE → HANDLER → RELEASE STATE → UPDATE CACHE → END</p>
+      </div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p>The <strong>ASP.NET Application Life Cycle</strong> defines how an application is <strong>started, initialized, processes client requests, generates responses, and finally terminates</strong>. Important events such as <strong>Application_Start, BeginRequest, AuthenticateRequest, AuthorizeRequest, AcquireRequestState, EndRequest, and Application_End</strong> help developers control different stages of application execution. For a 10-mark answer: write the definition + main diagram + stages + important events + Global.asax example + conclusion.</p>
+      </div>
+    </section>
+
+    <!-- 6. SESSION VS COOKIES -->
+    <section class="topic" id="session-cookies">
+      <div class="topic-head"><span class="topic-no">6</span><h2>Session vs Cookies</h2></div>
+
+      <h3>Definition of Session</h3>
+      <p>A <strong>Session</strong> is a server-side mechanism used by ASP.NET to store and maintain <strong>user-specific information</strong> during a user's interaction with a web application.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Session("UserName") = "Rahul"</code></pre>
+      </div>
+      <p>The data is stored on the <strong>server</strong>, while the browser normally holds only a session identifier.</p>
+
+      <h3>Definition of Cookies</h3>
+      <p>A <strong>Cookie</strong> is a small piece of data stored on the <strong>client's web browser</strong>. It is used to remember information about a user between requests.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Response.Cookies("UserName").Value = "Rahul"</code></pre>
+      </div>
+      <p>The cookie is stored on the <strong>client side</strong>.</p>
+
+      <h3>Diagram</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Session</div>
+        <pre><code>       CLIENT / BROWSER
+              │
+              │ Session ID
+              ▼
+       ┌───────────────┐
+       │ ASP.NET Server│
+       │               │
+       │ Session Data  │
+       │ UserName=Rahul│
+       └───────────────┘</code></pre>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Cookie</div>
+        <pre><code>       CLIENT / BROWSER
+              │
+              │ Cookie
+              ▼
+       ┌───────────────┐
+       │ Cookie Storage│
+       │ UserName=Rahul│
+       └───────────────┘
+              │
+              │ Sent with requests
+              ▼
+       ASP.NET SERVER</code></pre>
+      </div>
+
+      <h3>Session vs Cookies</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Basis</th><th>Session</th><th>Cookies</th></tr>
+        <tr><td>Storage</td><td>Primarily on the <strong>server</strong></td><td>On the <strong>client/browser</strong></td></tr>
+        <tr><td>Data access</td><td>Server-side</td><td>Client-side</td></tr>
+        <tr><td>Security</td><td>Generally safer for sensitive server-managed state, since the data need not sit in the browser</td><td>More exposed to the client; avoid storing sensitive information without protection</td></tr>
+        <tr><td>Storage capacity</td><td>Depends on the session-state mechanism and server resources</td><td>Small — browsers impose cookie size and count limits</td></tr>
+        <tr><td>Lifetime</td><td>Usually tied to a session; can expire after a timeout</td><td>Can be session-only or have an explicit expiration date</td></tr>
+        <tr><td>Server memory</td><td>Can consume server-side resources</td><td>Does not use server memory for the cookie data</td></tr>
+        <tr><td>Data transmission</td><td>Normally only a session identifier is sent</td><td>Cookie data is sent with applicable HTTP requests</td></tr>
+        <tr><td>User control</td><td>User cannot directly view server-side session data</td><td>User can view/manage cookies in browser settings</td></tr>
+        <tr><td>Best use</td><td>User-specific temporary application state</td><td>Preferences, identifiers, small persistent client-side state</td></tr>
+        <tr><td>Example</td><td>Login/session information, shopping cart state</td><td>Language preference, theme preference, remember-me identifier</td></tr>
+      </table></div>
+
+      <h3>Session Example in VB.NET</h3>
+      <div class="codeblock">
+        <div class="cb-label">Store / Retrieve / Remove</div>
+        <pre><code>' Store
+Session("UserName") = "Rahul"
+Session("UserId") = 101
+
+' Retrieve
+Dim name As String = Session("UserName").ToString()
+Response.Write(name)
+
+' Remove one key
+Session.Remove("UserName")
+
+' Clear all session data
+Session.Clear()</code></pre>
+      </div>
+
+      <h3>Cookie Example in VB.NET</h3>
+      <div class="codeblock">
+        <div class="cb-label">Create / Read / Expire</div>
+        <pre><code>' Create a cookie
+Response.Cookies("UserName").Value = "Rahul"
+
+' Read a cookie
+Dim name As String = Request.Cookies("UserName").Value
+Response.Write(name)
+
+' Set cookie expiration
+Response.Cookies("UserName").Expires =
+    DateTime.Now.AddDays(7)</code></pre>
+      </div>
+
+      <div class="callout trick"><span class="cal-lbl">One-Line Exam Difference</span>
+        <p><strong>Session stores user-specific application data primarily on the server, whereas a cookie stores small amounts of data in the user's web browser.</strong></p>
+        <p>Easy trick — <strong>Session = Server</strong>, <strong>Cookie = Client</strong>. Remember the 5 major differences: storage, lifetime, security, capacity, and server resources.</p>
+      </div>
+    </section>
+
+    <!-- 7. STATE MANAGEMENT -->
+    <section class="topic" id="state-management">
+      <div class="topic-head"><span class="topic-no">7</span><h2>State Management in ASP.NET</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>State Management in ASP.NET</strong> is the technique used to <strong>maintain and preserve information between multiple requests</strong> made by a user or between different users. HTTP is a <strong>stateless protocol</strong>, meaning the web server does not automatically remember information from one request to the next. ASP.NET provides different state-management techniques to overcome this limitation.</p>
+      </div>
+
+      <h3>Why State Management Is Required</h3>
+      <p>Consider a login page: the server authenticates the user on Request 1, then the user opens their profile on Request 2 — since HTTP does not automatically remember previous requests, ASP.NET needs <strong>state management</strong> to know who the user is.</p>
+
+      <h3>Types of State Management</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>                 STATE MANAGEMENT
+                        │
+              ┌─────────┴─────────┐
+              │                   │
+              ▼                   ▼
+        CLIENT-SIDE          SERVER-SIDE
+        STATE MANAGEMENT     STATE MANAGEMENT
+              │                   │
+       ┌──────┼──────┐      ┌─────┼────────┐
+       │      │      │      │     │        │
+       ▼      ▼      ▼      ▼     ▼        ▼
+    Cookies ViewState Query Session Application
+             State    String   State   State</code></pre>
+      </div>
+
+      <h3>Client-Side State Management</h3>
+      <p>State information is maintained on the <strong>client/browser side</strong>. Main techniques: ViewState, Cookies, Hidden Fields, Query String, Control State.</p>
+
+      <h4>1. ViewState</h4>
+      <p><strong>ViewState</strong> is a Web Forms technique used to <strong>preserve the values of controls between postbacks</strong>. It is stored in a hidden field in the HTML page sent to the browser.</p>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>       ASP.NET SERVER
+             │
+             │ ViewState
+             ▼
+       WEB BROWSER
+             │
+             │ Postback
+             ▼
+       ASP.NET SERVER
+             │
+             ▼
+       Restore Control Values</code></pre>
+      </div>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>ViewState("UserName") = "Rahul"
+
+Dim name As String = ViewState("UserName").ToString()</code></pre>
+      </div>
+      <p><strong>Advantages:</strong> easy to use, automatically maintains control values, no server-side storage required.<br>
+      <strong>Disadvantages:</strong> increases page size, not suitable for sensitive information, mainly tied to Web Forms.</p>
+
+      <h4>2. Cookies</h4>
+      <p>A small piece of information stored in the user's web browser.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Response.Cookies("UserName").Value = "Rahul"
+
+Dim name As String =
+    Request.Cookies("UserName").Value</code></pre>
+      </div>
+      <p>Uses: user preferences, small identifiers, remembering settings.</p>
+
+      <h4>3. Hidden Field</h4>
+      <p>Stores data in a hidden HTML form field that is submitted along with the page.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX + VB.NET</div>
+        <pre><code>&lt;asp:HiddenField
+    ID="HiddenField1"
+    runat="server" /&gt;
+
+' VB.NET
+HiddenField1.Value = "101"
+Dim id As String = HiddenField1.Value</code></pre>
+      </div>
+      <p>The user does not normally see the field on the rendered page, but its value is present in the HTML sent to the browser.</p>
+
+      <h4>4. Query String</h4>
+      <p>Passes information through the URL, e.g. <code>Student.aspx?id=101&amp;name=Rahul</code>.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Dim id As String = Request.QueryString("id")</code></pre>
+      </div>
+      <p><strong>Advantages:</strong> simple, easy to implement, no server-side storage required.<br>
+      <strong>Disadvantages:</strong> data is visible in the URL, limited amount of data, not suitable for sensitive information.</p>
+
+      <h4>5. Control State</h4>
+      <p><strong>Control State</strong> preserves the essential state of an ASP.NET server control even when ViewState is disabled — useful for controls that require certain state information to function correctly.</p>
+
+      <h3>Server-Side State Management</h3>
+      <p>Information is maintained on the <strong>server</strong>. Main techniques: Session State, Application State, Cache.</p>
+
+      <h4>1. Session State</h4>
+      <p>Stores information associated with a <strong>particular user's session</strong>.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Session("UserName") = "Rahul"
+
+Dim name As String =
+    Session("UserName").ToString()</code></pre>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>             SERVER
+                │
+       ┌────────┼────────┐
+       │        │        │
+       ▼        ▼        ▼
+   Session A Session B Session C
+   User A    User B    User C</code></pre>
+      </div>
+      <p>Uses: login information, shopping cart, user-specific preferences, temporary user data.</p>
+
+      <h4>2. Application State</h4>
+      <p>Stores information that is <strong>shared by all users</strong> of an ASP.NET application.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Application("CollegeName") =
+    "Satyam College"
+
+Dim name As String =
+    Application("CollegeName").ToString()</code></pre>
+      </div>
+      <p>Uses: website-wide settings, counters, global configuration information.</p>
+
+      <h4>3. Cache</h4>
+      <p><strong>Caching</strong> stores frequently used data temporarily so it can be retrieved quickly without repeatedly performing expensive operations.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Cache("StudentList") = studentData</code></pre>
+      </div>
+      <p>Uses: improving performance, reducing database requests, storing frequently accessed data.</p>
+
+      <h3>Client-Side vs Server-Side State Management</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Basis</th><th>Client-Side</th><th>Server-Side</th></tr>
+        <tr><td>Storage</td><td>Browser/client</td><td>Server</td></tr>
+        <tr><td>Examples</td><td>ViewState, Cookies, Hidden Field, Query String</td><td>Session, Application, Cache</td></tr>
+        <tr><td>Server memory</td><td>Usually less server storage required</td><td>Uses server-side resources</td></tr>
+        <tr><td>Performance</td><td>Can increase request/page size</td><td>Can consume server resources</td></tr>
+        <tr><td>Best for</td><td>Small client-related state</td><td>User/session/application data</td></tr>
+      </table></div>
+
+      <h3>Session vs Application</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Session State</th><th>Application State</th></tr>
+        <tr><td>User-specific</td><td>Shared by all users</td></tr>
+        <tr><td>Each user has separate data</td><td>One application-wide data store</td></tr>
+        <tr><td>Used for temporary user information</td><td>Used for global information</td></tr>
+        <tr><td>Example: User ID</td><td>Example: Total visitor count</td></tr>
+      </table></div>
+
+      <h3>ViewState vs Session</h3>
+      <div class="tablewrap"><table>
+        <tr><th>ViewState</th><th>Session</th></tr>
+        <tr><td>Client-side mechanism</td><td>Server-side mechanism</td></tr>
+        <tr><td>Mainly for Web Forms postbacks</td><td>User-specific application state</td></tr>
+        <tr><td>Stored with the page in a hidden field</td><td>Stored in session state on server or configured session store</td></tr>
+        <tr><td>Increases page size</td><td>Uses server/session-store resources</td></tr>
+        <tr><td>Page/control-specific</td><td>Available across pages in a session</td></tr>
+      </table></div>
+
+      <h3>Example: Login Application</h3>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>' On login
+Session("UserName") = "Rahul"
+
+' On another page
+Response.Write("Welcome " &amp;
+               Session("UserName").ToString())</code></pre>
+      </div>
+      <div class="codeblock">
+        <div class="cb-label">Output</div>
+        <pre><code>Welcome Rahul</code></pre>
+      </div>
+
+      <h3>Advantages of State Management</h3>
+      <ul>
+        <li>Maintains information between requests.</li>
+        <li>Helps create personalized web applications.</li>
+        <li>Maintains login/session information.</li>
+        <li>Improves user experience.</li>
+        <li>Reduces unnecessary data entry.</li>
+        <li>Supports shopping carts and similar workflows.</li>
+        <li>Helps maintain application-level information.</li>
+        <li>Caching can improve application performance.</li>
+      </ul>
+
+      <h3>Quick Revision Table</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Technique</th><th>Type</th><th>Main Purpose</th></tr>
+        <tr><td>ViewState</td><td>Client-side</td><td>Maintain control values across postbacks</td></tr>
+        <tr><td>Cookies</td><td>Client-side</td><td>Store small browser-side information</td></tr>
+        <tr><td>Hidden Field</td><td>Client-side</td><td>Store hidden form data</td></tr>
+        <tr><td>Query String</td><td>Client-side</td><td>Pass small values through URL</td></tr>
+        <tr><td>Control State</td><td>Client-side</td><td>Preserve essential control state</td></tr>
+        <tr><td>Session</td><td>Server-side</td><td>Store user-specific information</td></tr>
+        <tr><td>Application</td><td>Server-side</td><td>Store application-wide information</td></tr>
+        <tr><td>Cache</td><td>Server-side</td><td>Store frequently accessed data temporarily</td></tr>
+      </table></div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p><strong>State Management is an important feature of ASP.NET that allows applications to preserve information between HTTP requests.</strong> It is mainly divided into <strong>client-side and server-side state management</strong>. Techniques such as <strong>ViewState, Cookies, Query String, Session, Application State, and Cache</strong> are used according to the type and lifetime of information that needs to be maintained.</p>
+        <p><strong>Memory trick — Client:</strong> ViewState + Cookies + Hidden Field + Query String + Control State &nbsp;|&nbsp; <strong>Server:</strong> Session + Application + Cache</p>
+      </div>
+    </section>
+
+    <!-- 8. WEB SERVER CONTROLS -->
+    <section class="topic" id="web-controls">
+      <div class="topic-head"><span class="topic-no">8</span><h2>Web Server Controls</h2></div>
+      <p>ASP.NET provides several <strong>Web Server Controls</strong> that simplify the development of interactive web applications. They execute on the server and generate appropriate HTML for the browser. The important controls for exams: <strong>Validation Controls, Login Controls, Form Controls, Image Control, Repeater Control</strong>.</p>
+
+      <h3>1. Validation Controls</h3>
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>Validation Controls</strong> are ASP.NET server controls used to <strong>validate user input</strong> before the data is processed or submitted to the server. They help ensure that the user enters <strong>valid and complete information</strong>.</p>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>             USER INPUT
+                  │
+                  ▼
+          ┌───────────────┐
+          │ Validation    │
+          │ Controls      │
+          └───────┬───────┘
+                  │
+           ┌──────┴──────┐
+           │             │
+         Valid         Invalid
+           │             │
+           ▼             ▼
+      Process Data    Show Error</code></pre>
+      </div>
+
+      <h4>RequiredFieldValidator</h4>
+      <p>Checks whether a field has been left empty.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:RequiredFieldValidator
+    ID="rfvName"
+    runat="server"
+    ControlToValidate="txtName"
+    ErrorMessage="Name is required" /&gt;</code></pre>
+      </div>
+
+      <h4>CompareValidator</h4>
+      <p>Compares the value of one control with another value/control — e.g. Confirm Password.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:CompareValidator
+    ID="cvPassword"
+    runat="server"
+    ControlToValidate="txtConfirm"
+    ControlToCompare="txtPassword"
+    ErrorMessage="Passwords do not match" /&gt;</code></pre>
+      </div>
+
+      <h4>RangeValidator</h4>
+      <p>Checks whether a value lies within a specified range.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:RangeValidator
+    ID="rvAge"
+    runat="server"
+    ControlToValidate="txtAge"
+    MinimumValue="18"
+    MaximumValue="60"
+    Type="Integer"
+    ErrorMessage="Age must be between 18 and 60" /&gt;</code></pre>
+      </div>
+
+      <h4>RegularExpressionValidator</h4>
+      <p>Checks whether input matches a specified pattern — e.g. email validation.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:RegularExpressionValidator
+    ID="revEmail"
+    runat="server"
+    ControlToValidate="txtEmail"
+    ValidationExpression="^[^@\s]+@[^@\s]+\.[^@\s]+$"
+    ErrorMessage="Enter a valid email" /&gt;</code></pre>
+      </div>
+
+      <h4>CustomValidator</h4>
+      <p>Used when custom validation logic is required.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:CustomValidator
+    ID="cvCustom"
+    runat="server"
+    ControlToValidate="txtAge"
+    ErrorMessage="Invalid age" /&gt;</code></pre>
+      </div>
+
+      <h4>ValidationSummary</h4>
+      <p>Displays all validation error messages together.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:ValidationSummary
+    ID="ValidationSummary1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <div class="tablewrap"><table>
+        <tr><th>Control</th><th>Purpose</th></tr>
+        <tr><td>RequiredFieldValidator</td><td>Checks empty input</td></tr>
+        <tr><td>CompareValidator</td><td>Compares two values</td></tr>
+        <tr><td>RangeValidator</td><td>Checks value range</td></tr>
+        <tr><td>RegularExpressionValidator</td><td>Checks pattern</td></tr>
+        <tr><td>CustomValidator</td><td>Custom validation</td></tr>
+        <tr><td>ValidationSummary</td><td>Displays validation errors</td></tr>
+      </table></div>
+
+      <hr class="sep">
+
+      <h3>2. Login Controls</h3>
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>Login Controls</strong> are built-in ASP.NET controls used to implement <strong>user authentication and membership-related functionality</strong> with less custom coding.</p>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>              USER
+               │
+               ▼
+         Login Control
+               │
+               ▼
+       Authentication
+               │
+        ┌──────┴──────┐
+        │             │
+      Valid         Invalid
+        │             │
+        ▼             ▼
+    Login Success   Error</code></pre>
+      </div>
+
+      <h4>Login</h4>
+      <p>Provides a complete login interface (User Name, Password, Remember Me, Login button).</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:Login
+    ID="Login1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <h4>LoginName</h4>
+      <p>Displays the currently authenticated user's name.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:LoginName
+    ID="LoginName1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <h4>LoginStatus</h4>
+      <p>Displays Login or Logout functionality depending on the user's authentication state.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:LoginStatus
+    ID="LoginStatus1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <h4>LoginView</h4>
+      <p>Displays different content depending on whether the user is authenticated.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:LoginView
+    ID="LoginView1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <h4>CreateUserWizard</h4>
+      <p>Provides a wizard-style interface for creating a new user account.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:CreateUserWizard
+    ID="CreateUserWizard1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <h4>PasswordRecovery</h4>
+      <p>Provides an interface for recovering/resetting a user's password, subject to the configured membership/authentication system.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:PasswordRecovery
+    ID="PasswordRecovery1"
+    runat="server" /&gt;</code></pre>
+      </div>
+
+      <hr class="sep">
+
+      <h3>3. Form Controls</h3>
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>Form controls</strong> are ASP.NET controls used to <strong>accept input from users and provide interactive functionality</strong> in a web form: TextBox, Label, Button, LinkButton, ImageButton, CheckBox, RadioButton, DropDownList, ListBox, CheckBoxList, RadioButtonList.</p>
+      </div>
+
+      <h4>TextBox</h4>
+      <div class="codeblock">
+        <div class="cb-label">ASPX + VB.NET</div>
+        <pre><code>&lt;asp:TextBox
+    ID="txtName"
+    runat="server" /&gt;
+
+' VB.NET
+Dim name As String = txtName.Text</code></pre>
+      </div>
+
+      <h4>Label</h4>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:Label
+    ID="lblMessage"
+    runat="server"
+    Text="Welcome" /&gt;</code></pre>
+      </div>
+
+      <h4>Button</h4>
+      <div class="codeblock">
+        <div class="cb-label">ASPX + VB.NET</div>
+        <pre><code>&lt;asp:Button
+    ID="btnSubmit"
+    runat="server"
+    Text="Submit" /&gt;
+
+' VB.NET
+Protected Sub btnSubmit_Click(
+    sender As Object,
+    e As EventArgs)
+
+    lblMessage.Text = "Submitted Successfully"
+
+End Sub</code></pre>
+      </div>
+
+      <h4>CheckBox</h4>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:CheckBox
+    ID="chkAgree"
+    runat="server"
+    Text="I Agree" /&gt;</code></pre>
+      </div>
+
+      <h4>RadioButton</h4>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:RadioButton
+    ID="rbMale"
+    runat="server"
+    Text="Male"
+    GroupName="Gender" /&gt;</code></pre>
+      </div>
+
+      <h4>DropDownList</h4>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:DropDownList
+    ID="ddlCourse"
+    runat="server"&gt;
+    &lt;asp:ListItem&gt;BCA&lt;/asp:ListItem&gt;
+    &lt;asp:ListItem&gt;MCA&lt;/asp:ListItem&gt;
+&lt;/asp:DropDownList&gt;</code></pre>
+      </div>
+
+      <hr class="sep">
+
+      <h3>4. Image Control</h3>
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p>The <strong>Image control</strong> is an ASP.NET Web Server Control used to <strong>display an image on a web page</strong>.</p>
+      </div>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:Image
+    ID="Image1"
+    runat="server"
+    ImageUrl="~/Images/logo.png"
+    AlternateText="School Logo" /&gt;</code></pre>
+      </div>
+      <div class="tablewrap"><table>
+        <tr><th>Property</th><th>Purpose</th></tr>
+        <tr><td>ImageUrl</td><td>Specifies image location</td></tr>
+        <tr><td>AlternateText</td><td>Alternative text</td></tr>
+        <tr><td>Width</td><td>Specifies width</td></tr>
+        <tr><td>Height</td><td>Specifies height</td></tr>
+        <tr><td>ToolTip</td><td>Displays tooltip</td></tr>
+      </table></div>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Image1.ImageUrl = "~/Images/logo.png"
+Image1.Width = 200
+Image1.Height = 100</code></pre>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>ASP.NET Page
+     │
+     ▼
+ Image Control
+     │
+     ▼
+ Image URL
+     │
+     ▼
+ Display Image</code></pre>
+      </div>
+
+      <hr class="sep">
+
+      <h3>5. Repeater Control</h3>
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p>The <strong>Repeater control</strong> is an ASP.NET data-bound control used to <strong>display a repeated list of records from a data source</strong>. It is useful when custom control over the HTML layout of repeated data is needed.</p>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>              DATABASE
+                  │
+                  ▼
+              Data Source
+                  │
+                  ▼
+               Repeater
+                  │
+        ┌─────────┼─────────┐
+        ▼         ▼         ▼
+      Item 1    Item 2    Item 3
+        │         │         │
+        ▼         ▼         ▼
+     HTML      HTML      HTML</code></pre>
+      </div>
+
+      <h4>Repeater Templates</h4>
+      <ul>
+        <li><strong>HeaderTemplate</strong> — content displayed at the beginning.</li>
+        <li><strong>ItemTemplate</strong> — how each record is displayed.</li>
+        <li><strong>AlternatingItemTemplate</strong> — layout for alternating records.</li>
+        <li><strong>SeparatorTemplate</strong> — separator between items.</li>
+        <li><strong>FooterTemplate</strong> — content displayed at the end.</li>
+      </ul>
+
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:Repeater
+    ID="Repeater1"
+    runat="server"&gt;
+
+    &lt;HeaderTemplate&gt;
+        &lt;h2&gt;Student List&lt;/h2&gt;
+    &lt;/HeaderTemplate&gt;
+
+    &lt;ItemTemplate&gt;
+        &lt;p&gt;
+            &lt;%# Eval("Name") %&gt;
+        &lt;/p&gt;
+    &lt;/ItemTemplate&gt;
+
+    &lt;FooterTemplate&gt;
+        &lt;hr /&gt;
+    &lt;/FooterTemplate&gt;
+
+&lt;/asp:Repeater&gt;</code></pre>
+      </div>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET data binding</div>
+        <pre><code>Dim cmd As New SqlCommand(
+    "SELECT Name FROM Student", con)
+
+Dim da As New SqlDataAdapter(cmd)
+Dim dt As New DataTable()
+
+da.Fill(dt)
+
+Repeater1.DataSource = dt
+Repeater1.DataBind()</code></pre>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Working</div>
+        <pre><code>       Data Source
+            │
+            ▼
+       DataTable
+            │
+            ▼
+        Repeater
+            │
+     ┌──────┼──────┐
+     ▼      ▼      ▼
+   Record  Record  Record
+     │      │      │
+     ▼      ▼      ▼
+   Item    Item    Item
+  Template Template Template</code></pre>
+      </div>
+
+      <h3>Complete Quick Revision Table</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Control</th><th>Main Purpose</th></tr>
+        <tr><td>RequiredFieldValidator</td><td>Checks required input</td></tr>
+        <tr><td>CompareValidator</td><td>Compares values</td></tr>
+        <tr><td>RangeValidator</td><td>Checks range</td></tr>
+        <tr><td>RegularExpressionValidator</td><td>Validates pattern</td></tr>
+        <tr><td>CustomValidator</td><td>Custom validation</td></tr>
+        <tr><td>ValidationSummary</td><td>Shows validation errors</td></tr>
+        <tr><td>Login</td><td>Provides login interface</td></tr>
+        <tr><td>LoginName</td><td>Displays username</td></tr>
+        <tr><td>LoginStatus</td><td>Login/logout status</td></tr>
+        <tr><td>LoginView</td><td>Shows content based on authentication</td></tr>
+        <tr><td>CreateUserWizard</td><td>Creates user account</td></tr>
+        <tr><td>PasswordRecovery</td><td>Password recovery/reset workflow</td></tr>
+        <tr><td>TextBox</td><td>Accepts text</td></tr>
+        <tr><td>Label</td><td>Displays text</td></tr>
+        <tr><td>Button</td><td>Performs an action</td></tr>
+        <tr><td>CheckBox</td><td>Select/deselect option</td></tr>
+        <tr><td>RadioButton</td><td>Select one option from a group</td></tr>
+        <tr><td>DropDownList</td><td>Select from a list</td></tr>
+        <tr><td>Image</td><td>Displays image</td></tr>
+        <tr><td>Repeater</td><td>Displays repeated data</td></tr>
+      </table></div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p>ASP.NET Web Server Controls make web application development easier by providing <strong>ready-made controls for validation, authentication, user input, image display, and data presentation</strong>. <strong>Validation controls</strong> validate user input, <strong>Login controls</strong> support authentication-related interfaces, <strong>Form controls</strong> collect user input, the <strong>Image control</strong> displays images, and the <strong>Repeater control</strong> displays repeated data using customizable templates.</p>
+      </div>
+    </section>
+
+    <!-- 9. EVENT-DRIVEN PROGRAMMING -->
+    <section class="topic" id="event-driven">
+      <div class="topic-head"><span class="topic-no">9</span><h2>Event-Driven Programming</h2></div>
+
+      <div class="callout def"><span class="cal-lbl">Definition</span>
+        <p><strong>Event-Driven Programming</strong> is a programming approach in which the <strong>flow of program execution is determined by events</strong> generated by the user, system, or application. An <strong>event</strong> is an action such as clicking a button, changing a value, loading a page, or submitting a form. When an event occurs, an associated <strong>event handler</strong> is executed. In ASP.NET Web Forms, event-driven programming is an important feature that allows developers to respond to user actions.</p>
+      </div>
+
+      <h3>Basic Concept</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>        USER / SYSTEM
+              │
+              │ Generates Event
+              ▼
+       ┌───────────────┐
+       │     Event     │
+       │ Button Click  │
+       └───────┬───────┘
+               │
+               ▼
+       ┌───────────────┐
+       │ Event Handler │
+       └───────┬───────┘
+               │
+               ▼
+        Execute Code
+               │
+               ▼
+            Output</code></pre>
+      </div>
+      <p><strong>Example:</strong> User clicks "Submit" → <code>Button_Click</code> event occurs → <code>btnSubmit_Click()</code> executes → "Submitted Successfully" displayed.</p>
+
+      <h3>Important Terms</h3>
+
+      <h4>1. Event</h4>
+      <p>An <strong>event</strong> is an action or occurrence that can trigger a response — e.g. Button Click, Page Load, Text Changed, Selected Index Changed, mouse/keyboard actions in applicable controls.</p>
+
+      <h4>2. Event Handler</h4>
+      <p>An <strong>event handler</strong> is a method that contains the code executed when an event occurs.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Protected Sub btnSubmit_Click(
+    sender As Object,
+    e As EventArgs)
+
+    lblMessage.Text = "Submitted"
+
+End Sub</code></pre>
+      </div>
+      <p>Here: <code>btnSubmit_Click</code> → event handler, <code>sender</code> → object that generated the event, <code>e</code> → event information.</p>
+
+      <h4>3. Event Source</h4>
+      <p>The <strong>event source</strong> is the object/control that generates the event.</p>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:Button
+    ID="btnSubmit"
+    runat="server"
+    Text="Submit"
+    OnClick="btnSubmit_Click" /&gt;</code></pre>
+      </div>
+      <p>Here, <code>btnSubmit</code> is the event source.</p>
+
+      <h3>Event-Driven Programming in ASP.NET</h3>
+      <div class="codeblock diagram">
+        <div class="cb-label">Diagram</div>
+        <pre><code>                  ASP.NET
+                     │
+             ┌───────┴────────┐
+             │                │
+         Page Events      Control Events
+             │                │
+        Page_Load         Button_Click
+        Page_Init         TextChanged
+        Page_PreRender    SelectedIndexChanged</code></pre>
+      </div>
+
+      <h3>Common ASP.NET Events</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Event</th><th>Description</th></tr>
+        <tr><td>Page_Load</td><td>Occurs when the page is loaded</td></tr>
+        <tr><td>Page_Init</td><td>Occurs during page initialization</td></tr>
+        <tr><td>Button_Click</td><td>Occurs when a button is clicked</td></tr>
+        <tr><td>TextChanged</td><td>Occurs when text changes</td></tr>
+        <tr><td>SelectedIndexChanged</td><td>Occurs when selected item changes</td></tr>
+        <tr><td>Page_PreRender</td><td>Occurs before the page is rendered</td></tr>
+        <tr><td>Page_Unload</td><td>Occurs when page processing is completed</td></tr>
+      </table></div>
+
+      <h3>VB.NET Example</h3>
+      <div class="codeblock">
+        <div class="cb-label">ASPX</div>
+        <pre><code>&lt;asp:TextBox
+    ID="txtName"
+    runat="server"&gt;
+&lt;/asp:TextBox&gt;
+
+&lt;asp:Button
+    ID="btnSubmit"
+    runat="server"
+    Text="Submit"
+    OnClick="btnSubmit_Click"&gt;
+&lt;/asp:Button&gt;
+
+&lt;asp:Label
+    ID="lblMessage"
+    runat="server"&gt;
+&lt;/asp:Label&gt;</code></pre>
+      </div>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Protected Sub btnSubmit_Click(
+    sender As Object,
+    e As EventArgs)
+
+    lblMessage.Text =
+        "Hello " &amp; txtName.Text
+
+End Sub</code></pre>
+      </div>
+      <div class="codeblock diagram">
+        <div class="cb-label">Working</div>
+        <pre><code>User enters name
+       │
+       ▼
+Clicks Submit
+       │
+       ▼
+Button_Click Event
+       │
+       ▼
+btnSubmit_Click()
+       │
+       ▼
+Read txtName.Text
+       │
+       ▼
+Display message</code></pre>
+      </div>
+
+      <h3>Page_Load Event</h3>
+      <p><code>Page_Load</code> is one of the most commonly used ASP.NET page events.</p>
+      <div class="codeblock">
+        <div class="cb-label">VB.NET</div>
+        <pre><code>Protected Sub Page_Load(
+    sender As Object,
+    e As EventArgs)
+
+    If Not IsPostBack Then
+        lblMessage.Text = "Welcome!"
+    End If
+
+End Sub</code></pre>
+      </div>
+      <h4>Why IsPostBack?</h4>
+      <p>A Web Forms page can be requested initially and then submitted back to the server: on the first request <code>IsPostBack = False</code>; on a postback request <code>IsPostBack = True</code>. This is useful when initialization should happen only on the first page load.</p>
+
+      <h3>Event-Driven vs Sequential Programming</h3>
+      <div class="tablewrap"><table>
+        <tr><th>Event-Driven Programming</th><th>Sequential Programming</th></tr>
+        <tr><td>Execution is based on events</td><td>Execution follows a predefined sequence</td></tr>
+        <tr><td>User actions can trigger code</td><td>Program generally follows statements in order</td></tr>
+        <tr><td>Uses event handlers</td><td>Uses normal function/procedure flow</td></tr>
+        <tr><td>Common in GUI/web applications</td><td>Common in basic console/program logic</td></tr>
+        <tr><td>Example: Button Click</td><td>Example: statements executed top to bottom</td></tr>
+      </table></div>
+
+      <h3>Advantages of Event-Driven Programming</h3>
+      <ul>
+        <li><strong>Interactive applications</strong> can be developed easily.</li>
+        <li>Responds directly to <strong>user actions</strong>.</li>
+        <li>Makes GUI/web applications easier to design.</li>
+        <li>Different events can have separate event handlers.</li>
+        <li>Promotes modular programming.</li>
+        <li>Makes applications more responsive to user interaction.</li>
+        <li>ASP.NET provides many built-in events.</li>
+      </ul>
+
+      <h3>Disadvantages</h3>
+      <ul>
+        <li>Large applications can have many event handlers.</li>
+        <li>Event flow can sometimes be difficult to understand.</li>
+        <li>Debugging complex event interactions can be challenging.</li>
+        <li>Incorrect event ordering can cause unexpected behavior.</li>
+      </ul>
+
+      <div class="callout trick"><span class="cal-lbl">Remember</span>
+        <p><strong>Event</strong> = What happened? &nbsp;|&nbsp; <strong>Event Handler</strong> = What should the program do when it happens? &nbsp;|&nbsp; <strong>Event Source</strong> = Which control generated the event?</p>
+      </div>
+
+      <div class="callout conclusion"><span class="cal-lbl">Exam Conclusion</span>
+        <p><strong>Event-driven programming is a programming technique in which program execution is controlled by events.</strong> In ASP.NET Web Forms, controls such as <strong>Button, TextBox, DropDownList, and Page</strong> generate events, and <strong>event handlers written in VB.NET</strong> execute the required code when those events occur.</p>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<button class="backtop" id="backTop" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var themeBtn = document.getElementById('themeToggle');
+  var ttIcon = themeBtn.querySelector('.tt-icon');
+  var ttText = themeBtn.querySelector('.tt-text');
+  function applyTheme(t){
+    root.setAttribute('data-theme', t);
+    ttIcon.textContent = t === 'dark' ? '☀️' : '🌙';
+    ttText.textContent = t === 'dark' ? ' Light mode' : ' Dark mode';
+    try { localStorage.setItem('asp-notes-theme', t); } catch(e){}
+  }
+  var saved = null;
+  try { saved = localStorage.getItem('asp-notes-theme'); } catch(e){}
+  applyTheme(saved === 'dark' ? 'dark' : 'light');
+  themeBtn.addEventListener('click', function(){
+    applyTheme(root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+  });
+
+  var sidebar = document.getElementById('sidebar');
+  var backdrop = document.getElementById('backdrop');
+  var menuBtn = document.getElementById('menuBtn');
+  function closeMenu(){ sidebar.classList.remove('open'); backdrop.classList.remove('show'); }
+  menuBtn.addEventListener('click', function(){
+    sidebar.classList.toggle('open');
+    backdrop.classList.toggle('show');
+  });
+  backdrop.addEventListener('click', closeMenu);
+  document.querySelectorAll('#toc a').forEach(function(a){
+    a.addEventListener('click', closeMenu);
+  });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
+  var sections = links.map(function(a){ return document.querySelector(a.getAttribute('href')); });
+  function setActive(id){
+    links.forEach(function(a){
+      a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+    });
+  }
+  if ('IntersectionObserver' in window){
+    var obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    }, { rootMargin: '-20% 0px -70% 0px' });
+    sections.forEach(function(s){ if (s) obs.observe(s); });
+  }
+
+  var backTop = document.getElementById('backTop');
+  window.addEventListener('scroll', function(){
+    backTop.classList.toggle('show', window.scrollY > 500);
+  });
+  backTop.addEventListener('click', function(){
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+})();
+</script>
+</body>
+</html>

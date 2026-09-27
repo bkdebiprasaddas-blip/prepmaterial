@@ -36,7 +36,7 @@ window.TYBCA_SEM5_SUBJECTS = [
     name: "UNIX & Shell Programming",
     shortName: "UNIX",
     icon: "🐚",
-    description: "322 questions across 8 sections — MCQs plus 1 to 7 mark answers.",
+    description: "214 questions organized by syllabus units — 53 MCQs, 120 short, 41 long.",
     file: "subjects/unix-shell-programming.html",
     color: "#D97706",
     colorSoft: "#FFFBEB"
@@ -50,5 +50,6 @@ window.TYBCA_SEM5_SUBJECTS = [
     file: "subjects/asp-net-dotnet.html",
     color: "#DB2777",
     colorSoft: "#FDF2F8"
-  }
+  },
+  
 ];
