@@ -16,7 +16,7 @@ window.TYBCA_SEM5_SUBJECTS = [
     name: "PHP, MySQL & Web Framework Services",
     shortName: "PHP/WFS",
     icon: "🐘",
-    description: "Question bank by marks, previous-year papers, exam-focused preparation.",
+    description: "208 questions organized by syllabus units — MCQ, short, long, comparisons, programming.",
     file: "subjects/php-mysql-wfs.html",
     color: "#7C3AED",
     colorSoft: "#F5F3FF"
