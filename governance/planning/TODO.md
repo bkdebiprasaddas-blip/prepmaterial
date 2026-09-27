@@ -174,3 +174,27 @@ only.
   (left as-is; not referenced by production code once `subjects/` exists)
 - A 4th+ subject — architecture supports it (one config entry + one file),
   add when the file is supplied
+
+## AWD content rebuild 2026-09-27 (session 2) — follow-ups
+Recorded, deliberately **not** fixed in this pass (§J14 — out of scope, and
+fixing them would change approved content). Details in
+`ai-context\SESSION-2026-09-27-2.md`.
+
+- [ ] **Duplicate question: `form-5` == `form-13`** — near-identical AngularJS
+  registration-form question. Both are retained original cards, confirmed
+  present before this rebuild. 312 cards / 311 distinct stems. Needs a user
+  decision: merge, or keep both as repeated-question practice?
+- [ ] **Highlighter does not know `typescript`** — used by retained card
+  `14short-69`. `hl()` falls back to JS keywords so it renders safely, just
+  with JS-ish colouring and a raw `typescript` label. One-line fix: add
+  `typescript` to the `KW` and `LANG` tables in the page.
+- [ ] **Visual review of the new unit/topic layout** — structural and
+  headless-Chrome DOM checks all pass, but no human has looked at how the page
+  renders. Screenshot captured to
+  `%TEMP%\opencode\awd-align\out\shot-top.png`; the agent cannot read images.
+- [ ] Topic `4.6` is intentionally under-filled — the user said not to invent
+  questions to pad it. Revisit only if real exam-pattern questions appear.
+- [ ] 26 hand-authored topic IDs in the AWD build content files disagree with
+  `stage1.json`. `stage1.json` was treated as authoritative to preserve the
+  approved 99/104/36/58 distribution. If the hand-authored mapping is actually
+  correct, the unit distribution must be re-approved first.
