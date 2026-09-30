@@ -42,6 +42,16 @@ window.TYBCA_SEM5_SUBJECTS = [
     colorSoft: "#FFFBEB"
   },
   {
+    id: "unix-qb",
+    name: "UNIX & Shell — Interactive Question Bank",
+    shortName: "UNIX QB",
+    icon: "🎯",
+    description: "Searchable question bank by unit and type — click any question for its full answer.",
+    file: "subjects/unix-question-bank-interactive.html",
+    color: "#0EA5E9",
+    colorSoft: "#F0F9FF"
+  },
+  {
     id: "aspnet",
     name: "ASP.NET / .NET Technology",
     shortName: "ASP.NET",
