@@ -97,16 +97,20 @@
   assertion-based verification; three script-authoring gotchas hit and fixed
   (write-after-validate, here-string trailing newline, cascading renumber).
 - Older sessions (1–5 on 2026-09-17) archived to `ai-context\archive\`.
-
 ## Next step
-The UNIX fix is **complete and verified but NOT committed**. Open
-`subjects/unix-shell-programming.html` for a human visual pass, then say
-**"push"** to commit and push.
 
-Other open items, recorded in `TODO.md`: de-duplicate AWD `form-5`/`form-13`,
-add `typescript` to the AWD highlighter tables, and a human visual pass over
-the AWD layout. Three untracked source files (the UNIX question-bank MD, the
-ChatGPT ASP.NET notes MD, and `PHP_Syllabus_Wise_Bifurcated.md`) are the only
-other pending decisions.
+UNIX fix is committed and pushed (see above). **Visual verification pending**:
+open `subjects/unix-shell-programming.html` and the AWD page for a human visual
+pass.
+
+**2026-10-04: AWD page updated.** `AWD Question_Bank_Interactive.html` (new
+interactive version, 312 cards, inline answers, source annotations, full
+sidebar/filter/print/dark-mode support) has replaced
+`subjects/advanced-web-designing.html`. Committed and pushed as `800be73`.
+No dashboard config change needed — `subjects.config.js` already referenced the
+same path. Visual review of the updated AWD page is pending.
+
+Other open items, recorded in `TODO.md`: the three untracked source MD files
+(UNIX question bank, ChatGPT ASP.NET notes, PHP syllabus) are pending decisions.
 
 
